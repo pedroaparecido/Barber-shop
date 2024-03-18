@@ -8,13 +8,14 @@ const PrincipalInput = styled.input`
     padding: 20px;
     width: 400px;
     color: #16171d;
+    background-color: #e0d6c9;
     font-size: 16px;
 `
 
-function Input({ type }) {
+function Input({ type, placeholder }) {
     return(
         <PrincipalDiv>
-            <PrincipalInput type={type} />
+            <PrincipalInput type={type} placeholder={placeholder} />
         </PrincipalDiv>
     )
 }

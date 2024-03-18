@@ -12,8 +12,10 @@ const PrincipalButton = styled.button`
     color: #16171d;
     background-color: transparent;
     color: #d5b890;
-    border-color: #d5b890;
+    border-color: #ebc185c9;
     border-width: 4px;
+
+    cursor: pointer;
 `
 
 function TransparentButton({ children }) {

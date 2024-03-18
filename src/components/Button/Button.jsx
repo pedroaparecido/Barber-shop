@@ -10,7 +10,10 @@ const PrincipalButton = styled.button`
     color: #16171d;
     font-size: 16px;
     color: #16171d;
-    background-color: #d5b890;
+    background-color: #ebc185c9;
+    border: none;
+
+    cursor: pointer;
 `
 
 function Button({ children }) {
