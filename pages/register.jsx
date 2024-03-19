@@ -1,14 +1,11 @@
 import styled from "styled-components"
-
-import Link from "next/link"
-
 import Input from "../src/components/inputs/Input"
 import Button from "../src/components/Button/Button"
 import TransparentButton from "../src/components/Button/TransparentButton"
-import BackgroundImage from '../public/layout-principal.jpg'
+import Link from "next/link"
 
 const PrincipalDiv = styled.div`
-    padding-top: 120px;
+    padding-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,10 +13,10 @@ const PrincipalDiv = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
-    height: 70vh;
+    height: 84vh;
 `
 
-const StyledP = styled.p`
+const StyledP = styled.span`
     padding-top: 10px;
     color: #ebc185;
 `
@@ -47,15 +44,18 @@ const UnderlineSpan = styled.span`
     text-decoration: underline;
 `
 
-function HomePage() {
+function Register() {
     return(
         <>
             <PrincipalDiv>
-                <Input type="text" placeholder="NOME OU USUÁRIO" />
+                <Input type="text" placeholder="NOME" />
+                <Input type="text" placeholder="USUÁRIO" />
+                <Input type="email" placeholder="EMAIL" />
+                <Input type="number" placeholder="CELULAR" />
                 <Input type="password" placeholder="SENHA" />
-                <Button>LOGIN</Button>
-                <TransparentButton>REGISTER</TransparentButton>
-                <StyledP>AINDA NÃO É CADASTRADO? <Link href="/register"><StyledLink>CADASTRE-SE</StyledLink></Link></StyledP>
+                <Button>REGISTRAR</Button>
+                <TransparentButton>LOGIN</TransparentButton>
+                <StyledP>JÁ É REGISTRADO? FAÇA O <Link href="/"><StyledLink>LOGIN</StyledLink></Link></StyledP>
             </PrincipalDiv>
             <FooterDiv>
                 <FooterCopy>Feito por <UnderlineSpan>PEDRO APARECIDO</UnderlineSpan> - ©</FooterCopy>
@@ -64,4 +64,4 @@ function HomePage() {
     )
 }
 
-export default HomePage
+export default Register

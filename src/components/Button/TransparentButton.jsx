@@ -16,6 +16,13 @@ const PrincipalButton = styled.button`
     border-width: 4px;
 
     cursor: pointer;
+
+    &:hover {
+        transition: all 0.5s;
+        background-color: #deaa61;
+        color: #16171d;
+        border-color: transparent;
+    }
 `
 
 function TransparentButton({ children }) {

@@ -14,6 +14,11 @@ const PrincipalButton = styled.button`
     border: none;
 
     cursor: pointer;
+
+    &:hover {
+        transition: 1s;
+        background-color: #deaa61;
+    }
 `
 
 function Button({ children }) {
