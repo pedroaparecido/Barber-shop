@@ -28,6 +28,7 @@ const Error = styled.span`
 const errorMessage = {
     'string.empty': 'Campo obrigatório',
     'string.email': 'Digite um email válido',
+    'duplicated': 'Email ou usuário já existe'
 }
 
 const Input = ({ name, control, defaultValue = '', ...props }) => {

@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { joiResolver } from '@hookform/resolvers/joi'
+import axios from "axios"
 
 import { signupSchema } from '../modules/user/user.schema'
 
@@ -8,6 +9,7 @@ import Button from "../src/components/Button/Button"
 import TransparentButton from "../src/components/Button/TransparentButton"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
+import { useRouter } from "next/router"
 
 const PrincipalDiv = styled.div`
     padding-top: 20px;
@@ -50,15 +52,26 @@ const UnderlineSpan = styled.span`
 `
 
 function Register() {
-    const { control, handleSubmit, formState: { errors } } = useForm({
+    const router = useRouter()
+    const { control, handleSubmit, formState: { errors }, setError } = useForm({
         resolver: joiResolver(signupSchema)
     })
 
-    const handleForm = (data) => {
-        console.log(data)
-    }
+    const handleForm = async (data) => {
+        try {
+            const response = await axios.post('/api/user/signup', data)
 
-    console.log(errors)
+            if (response.status === 201) {
+                router.push('/')
+            }
+        } catch (err) {
+            if (err.response.data.code === 11000) {
+                setError(err.response.data.duplicatedKey, {
+                    type: 'duplicated'
+                })
+            }
+        }
+    }
 
     return(
         <>
