@@ -64,11 +64,11 @@ function Register() {
         <>
             <PrincipalDiv>
                 <form onSubmit={handleSubmit(handleForm)}>
-                    <Input type="text" placeholder="NOME" {...register('name')} name="name" />
-                    <Input type="text" placeholder="USUÁRIO" {...register('user')} name="user" />
-                    <Input type="email" placeholder="EMAIL" {...register('email')} name="email" />
-                    <Input type="number" placeholder="CELULAR" {...register('celphone')} name="celphone" />
-                    <Input type="password" placeholder="SENHA" {...register('password')} name="password" />
+                    <Input type="text" placeholder="NOME" {...register('name')} name="name" error={errors.name} />
+                    <Input type="text" placeholder="USUÁRIO" {...register('user')} name="user" error={errors.user} />
+                    <Input type="email" placeholder="EMAIL" {...register('email')} name="email" error={errors.email} />
+                    <Input type="number" placeholder="CELULAR" {...register('celphone')} name="celphone" error={errors.celphone} />
+                    <Input type="password" placeholder="SENHA" {...register('password')} name="password" error={errors.password} />
                     <Button type="submit">REGISTRAR</Button>
                 </form>
                 <Link href="/"><TransparentButton>LOGIN</TransparentButton></Link>

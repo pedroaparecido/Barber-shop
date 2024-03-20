@@ -12,11 +12,11 @@ const PrincipalButton = styled.button`
     color: #16171d;
     background-color: #ebc185c9;
     border: none;
+    transition: 1s;
 
     cursor: pointer;
 
     &:hover {
-        transition: 1s;
         background-color: #deaa61;
     }
 `
