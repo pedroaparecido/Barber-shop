@@ -1,15 +1,25 @@
+import { withIronSessionApiRoute } from "iron-session/next"
+
 import createHandler from "../../../lib/middlewares/nextConnect"
 import validate from "../../../lib/middlewares/validation"
 
 import { signupUser } from "../../../modules/user/user.service" 
 import { createUserSchema } from '../../../modules/user/user.schema'
 
+import { ironConfig } from "../../../lib/middlewares/iron-session"
+
 const signup = createHandler()
 
 signup.post(validate({ body: createUserSchema }), async (req, res) => {
     try {
         const user = await signupUser(req.body)
-        res.status(201).json(user)
+        req.session.user = {
+            id: user._id,
+            user: user.user
+        }
+        await req.session.save()
+
+        res.status(201).json({ ok: true })
     } catch (err) {
         console.error(err)
         throw err
@@ -17,4 +27,4 @@ signup.post(validate({ body: createUserSchema }), async (req, res) => {
     
     })
 
-export default signup
+export default withIronSessionApiRoute(signup, ironConfig)
