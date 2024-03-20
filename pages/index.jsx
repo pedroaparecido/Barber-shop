@@ -51,9 +51,11 @@ function HomePage() {
     return(
         <>
             <PrincipalDiv>
-                <Input type="text" placeholder="NOME OU USUÁRIO" />
-                <Input type="password" placeholder="SENHA" />
-                <Button>LOGIN</Button>
+                <form>
+                    <Input type="text" placeholder="NOME OU USUÁRIO" />
+                    <Input type="password" placeholder="SENHA" />
+                    <Button>LOGIN</Button>
+                </form>
                 <TransparentButton>REGISTER</TransparentButton>
                 <StyledP>AINDA NÃO É CADASTRADO? <Link href="/register"><StyledLink>CADASTRE-SE</StyledLink></Link></StyledP>
             </PrincipalDiv>

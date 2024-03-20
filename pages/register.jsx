@@ -48,12 +48,14 @@ function Register() {
     return(
         <>
             <PrincipalDiv>
-                <Input type="text" placeholder="NOME" />
-                <Input type="text" placeholder="USUÁRIO" />
-                <Input type="email" placeholder="EMAIL" />
-                <Input type="number" placeholder="CELULAR" />
-                <Input type="password" placeholder="SENHA" />
-                <Button>REGISTRAR</Button>
+                <form>
+                    <Input type="text" placeholder="NOME" />
+                    <Input type="text" placeholder="USUÁRIO" />
+                    <Input type="email" placeholder="EMAIL" />
+                    <Input type="number" placeholder="CELULAR" />
+                    <Input type="password" placeholder="SENHA" />
+                    <Button>REGISTRAR</Button>
+                </form>
                 <TransparentButton>LOGIN</TransparentButton>
                 <StyledP>JÁ É REGISTRADO? FAÇA O <Link href="/"><StyledLink>LOGIN</StyledLink></Link></StyledP>
             </PrincipalDiv>
