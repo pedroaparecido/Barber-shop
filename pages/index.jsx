@@ -56,8 +56,8 @@ function HomePage() {
                     <Input type="password" placeholder="SENHA" />
                     <Button>LOGIN</Button>
                 </form>
-                <TransparentButton>REGISTER</TransparentButton>
-                <StyledP>AINDA NÃO É CADASTRADO? <Link href="/register"><StyledLink>CADASTRE-SE</StyledLink></Link></StyledP>
+                <Link href="/register"><TransparentButton>REGISTER</TransparentButton></Link>
+                
             </PrincipalDiv>
             <FooterDiv>
                 <FooterCopy>Feito por <UnderlineSpan>PEDRO APARECIDO</UnderlineSpan> - ©</FooterCopy>

@@ -1,8 +1,13 @@
 import styled from "styled-components"
+import { joiResolver } from '@hookform/resolvers/joi'
+
+import { signupSchema } from '../modules/user/user.schema'
+
 import Input from "../src/components/inputs/Input"
 import Button from "../src/components/Button/Button"
 import TransparentButton from "../src/components/Button/TransparentButton"
 import Link from "next/link"
+import { useForm } from "react-hook-form"
 
 const PrincipalDiv = styled.div`
     padding-top: 20px;
@@ -45,19 +50,29 @@ const UnderlineSpan = styled.span`
 `
 
 function Register() {
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: joiResolver(signupSchema)
+    })
+
+    const handleForm = (data) => {
+        console.log(data)
+    }
+
+    console.log(errors)
+
     return(
         <>
             <PrincipalDiv>
-                <form>
-                    <Input type="text" placeholder="NOME" />
-                    <Input type="text" placeholder="USUÁRIO" />
-                    <Input type="email" placeholder="EMAIL" />
-                    <Input type="number" placeholder="CELULAR" />
-                    <Input type="password" placeholder="SENHA" />
-                    <Button>REGISTRAR</Button>
+                <form onSubmit={handleSubmit(handleForm)}>
+                    <Input type="text" placeholder="NOME" {...register('name')} name="name" />
+                    <Input type="text" placeholder="USUÁRIO" {...register('user')} name="user" />
+                    <Input type="email" placeholder="EMAIL" {...register('email')} name="email" />
+                    <Input type="number" placeholder="CELULAR" {...register('celphone')} name="celphone" />
+                    <Input type="password" placeholder="SENHA" {...register('password')} name="password" />
+                    <Button type="submit">REGISTRAR</Button>
                 </form>
-                <TransparentButton>LOGIN</TransparentButton>
-                <StyledP>JÁ É REGISTRADO? FAÇA O <Link href="/"><StyledLink>LOGIN</StyledLink></Link></StyledP>
+                <Link href="/"><TransparentButton>LOGIN</TransparentButton></Link>
+                
             </PrincipalDiv>
             <FooterDiv>
                 <FooterCopy>Feito por <UnderlineSpan>PEDRO APARECIDO</UnderlineSpan> - ©</FooterCopy>

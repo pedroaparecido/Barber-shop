@@ -4,13 +4,13 @@ import createHandler from "../../../lib/middlewares/nextConnect"
 import validate from "../../../lib/middlewares/validation"
 
 import { signupUser } from "../../../modules/user/user.service" 
-import { createUserSchema } from '../../../modules/user/user.schema'
+import { signupSchema } from '../../../modules/user/user.schema'
 
 import { ironConfig } from "../../../lib/middlewares/iron-session"
 
 const signup = createHandler()
 
-signup.post(validate({ body: createUserSchema }), async (req, res) => {
+signup.post(validate({ body: signupSchema }), async (req, res) => {
     try {
         const user = await signupUser(req.body)
         req.session.user = {

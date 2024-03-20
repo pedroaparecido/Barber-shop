@@ -1,3 +1,4 @@
+import { forwardRef } from "react"
 import styled from "styled-components"
 
 const PrincipalDiv = styled.div`
@@ -12,12 +13,12 @@ const PrincipalInput = styled.input`
     font-size: 16px;
 `
 
-function Input({ type, placeholder }) {
+const Input = forwardRef(({ type, placeholder }, ref) => {
     return(
         <PrincipalDiv>
-            <PrincipalInput type={type} placeholder={placeholder} />
+            <PrincipalInput type={type} placeholder={placeholder} ref={ref} />
         </PrincipalDiv>
     )
-}
+})
 
 export default Input
