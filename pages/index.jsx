@@ -1,11 +1,17 @@
 import styled from "styled-components"
+import { joiResolver } from '@hookform/resolvers/joi'
+import axios from "axios"
+import { useRouter } from "next/router"
 
 import Link from "next/link"
+
+import { loginSchema } from '../modules/user/login.schema'
 
 import Input from "../src/components/inputs/Input"
 import Button from "../src/components/Button/Button"
 import TransparentButton from "../src/components/Button/TransparentButton"
 import BackgroundImage from '../public/layout-principal.jpg'
+import { useForm } from "react-hook-form"
 
 const PrincipalDiv = styled.div`
     padding-top: 120px;
@@ -48,13 +54,38 @@ const UnderlineSpan = styled.span`
 `
 
 function HomePage() {
+    const router = useRouter()
+    const { control, handleSubmit, formState: { errors }, setError } = useForm({
+        resolver: joiResolver(loginSchema)
+    })
+
+    const handleForm = async (data) => {
+        try {
+            const response = await axios.post('/api/user/login', data)
+
+            if (response.status === 200) {
+                router.push('/register')
+            }
+        } catch ({ response }) {
+            if (response.data === 'incorrect password') {
+                setError('password', {
+                    message: 'A senha está incorreta'
+                })
+            } else if (response.data === 'not found') {
+                setError('userOrEmail', {
+                    message: 'Usuário ou email não encontrado'
+                })
+            }
+        }
+    }
+
     return(
         <>
             <PrincipalDiv>
-                <form>
-                    <Input type="text" placeholder="NOME OU USUÁRIO" />
-                    <Input type="password" placeholder="SENHA" />
-                    <Button>LOGIN</Button>
+                <form onSubmit={handleSubmit(handleForm)}>
+                    <Input type="text" placeholder="NOME OU USUÁRIO" name="userOrEmail" control={control} />
+                    <Input type="password" placeholder="SENHA" name="password" control={control} />
+                    <Button type="submit">LOGIN</Button>
                 </form>
                 <Link href="/register"><TransparentButton>REGISTER</TransparentButton></Link>
                 
