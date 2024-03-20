@@ -1,5 +1,5 @@
-import { forwardRef } from "react"
 import styled from "styled-components"
+import { useController } from "react-hook-form"
 
 const PrincipalDiv = styled.div`
     padding-top: 10px;
@@ -30,13 +30,17 @@ const errorMessage = {
     'string.email': 'Digite um email válido',
 }
 
-const Input = forwardRef(({ error, ...props }, ref) => {
+const Input = ({ name, control, defaultValue = '', ...props }) => {
+    const {
+        field: { value, onChange },
+        fieldState: { error }
+    } = useController({ name, control, defaultValue })
     return(
         <PrincipalDiv>
-            <PrincipalInput {...props} ref={ref} error={error} />
+            <PrincipalInput {...props} error={error} value={value} onChange={onChange} />
             {error && <Error>{errorMessage[error.type] || error.message}</Error>}
         </PrincipalDiv>
     )
-})
+}
 
 export default Input

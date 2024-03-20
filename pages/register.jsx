@@ -50,7 +50,7 @@ const UnderlineSpan = styled.span`
 `
 
 function Register() {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: joiResolver(signupSchema)
     })
 
@@ -64,11 +64,11 @@ function Register() {
         <>
             <PrincipalDiv>
                 <form onSubmit={handleSubmit(handleForm)}>
-                    <Input type="text" placeholder="NOME" {...register('name')} name="name" error={errors.name} />
-                    <Input type="text" placeholder="USUÁRIO" {...register('user')} name="user" error={errors.user} />
-                    <Input type="email" placeholder="EMAIL" {...register('email')} name="email" error={errors.email} />
-                    <Input type="number" placeholder="CELULAR" {...register('celphone')} name="celphone" error={errors.celphone} />
-                    <Input type="password" placeholder="SENHA" {...register('password')} name="password" error={errors.password} />
+                    <Input type="text" placeholder="NOME" name="name" control={control} />
+                    <Input type="text" placeholder="USUÁRIO" name="user" control={control} />
+                    <Input type="email" placeholder="EMAIL" name="email" control={control} />
+                    <Input type="number" placeholder="CELULAR" name="celphone" control={control} />
+                    <Input type="password" placeholder="SENHA" name="password" control={control} />
                     <Button type="submit">REGISTRAR</Button>
                 </form>
                 <Link href="/"><TransparentButton>LOGIN</TransparentButton></Link>
