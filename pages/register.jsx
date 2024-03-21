@@ -84,7 +84,7 @@ function Register() {
                     <Input type="password" placeholder="SENHA" name="password" control={control} />
                     <Button type="submit">REGISTRAR</Button>
                 </form>
-                <Link href="/"><TransparentButton>LOGIN</TransparentButton></Link>
+                <Link href="/preindex"><TransparentButton>LOGIN</TransparentButton></Link>
                 
             </PrincipalDiv>
             <FooterDiv>
