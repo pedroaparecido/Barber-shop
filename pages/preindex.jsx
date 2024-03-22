@@ -10,7 +10,6 @@ const PrincipalDiv = styled.div`
 `
 
 const SecondDiv = styled.div`
-    margin-top: 50px;
     background-color: #414758;
     width: 500px;
     height: 500px;

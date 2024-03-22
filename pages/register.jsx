@@ -62,7 +62,7 @@ function Register() {
             const response = await axios.post('/api/user/signup', data)
 
             if (response.status === 201) {
-                router.push('/')
+                router.push('/preindex')
             }
         } catch (err) {
             if (err.response.data.code === 11000) {
@@ -84,7 +84,7 @@ function Register() {
                     <Input type="password" placeholder="SENHA" name="password" control={control} />
                     <Button type="submit">REGISTRAR</Button>
                 </form>
-                <Link href="/preindex"><TransparentButton>LOGIN</TransparentButton></Link>
+                <Link href="/"><TransparentButton>LOGIN</TransparentButton></Link>
                 
             </PrincipalDiv>
             <FooterDiv>

@@ -64,7 +64,7 @@ function HomePage() {
             const response = await axios.post('/api/user/login', data)
 
             if (response.status === 200) {
-                router.push('/register')
+                router.push('/preindex')
             }
         } catch ({ response }) {
             if (response.data === 'incorrect password') {

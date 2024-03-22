@@ -12,6 +12,7 @@ const NavbarDiv = styled.div`
     justify-content: end;
     align-items: center;
     gap: 20px;
+    margin-bottom: 30px;
 `
 
 const PrincipalDiv = styled.div`
@@ -23,12 +24,14 @@ const PrincipalDiv = styled.div`
     gap: 20px;
 `
 
-function Navbar() {
+function Navbar({ name }) {
     return(
         <NavbarDiv>
             <LogoImage image="/layout-principal.jpg" width="60px" height="60px" />
             <H1>Olá {name}</H1>
             <PrincipalDiv>
+                <Link href="/home" style={{textDecoration: 'none'}}><H1>Início</H1></Link>
+                <Link href="/schedule" style={{textDecoration: 'none'}}><H1>Agende</H1></Link>
                 <Link href="/" style={{textDecoration: 'none'}}><H1>Sair</H1></Link>
             </PrincipalDiv>
         </NavbarDiv>
