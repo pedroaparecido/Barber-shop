@@ -31,7 +31,7 @@ function Navbar({ name }) {
             <H1>Olá {name}</H1>
             <PrincipalDiv>
                 <Link href="/home" style={{textDecoration: 'none'}}><H1>Início</H1></Link>
-                <Link href="/schedule" style={{textDecoration: 'none'}}><H1>Agende</H1></Link>
+                <Link href="/schedule" style={{textDecoration: 'none'}}><H1>Agendamento</H1></Link>
                 <Link href="/" style={{textDecoration: 'none'}}><H1>Sair</H1></Link>
             </PrincipalDiv>
         </NavbarDiv>
