@@ -2,7 +2,10 @@ import mongoose from "mongoose"
 
 const ScheduleSchema = mongoose.Schema({
     date: { type: Date, required: true },
-    barber: { type: Object, required: true },
+    barber: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Barber'
+    }],
     text: { type: String }
 })
 

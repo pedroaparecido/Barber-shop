@@ -13,6 +13,13 @@ const Image = styled.div`
     width: ${props => props.width};
     height: ${props => props.height};
     border-radius: 50%;
+    box-sizing: border-box;
+
+    cursor: pointer;
+
+    &:hover {
+        border: 10px solid #ffb34a;
+    }
 `
 
 const Span = styled.span`

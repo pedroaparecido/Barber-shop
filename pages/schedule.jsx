@@ -66,7 +66,9 @@ const HR = styled.hr`
     width: 95%;
 `
 
-function Rate() {
+function Schedule() {
+    const barber = ['Barbeiro 1', 'Barbeiro 2', 'Barbeiro 3', 'Barbeiro 4']
+
     return(
         <PrincipalDiv>
             <Navbar />
@@ -82,10 +84,10 @@ function Rate() {
                     <Paragraph weight="bold">ESCOLHA O BARBEIRO</Paragraph>
                 </SecondDiv>
                 <FourthDiv>
-                    <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">Barbeiro 1</LogoBarber>
-                    <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">Barbeiro 2</LogoBarber>
-                    <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">Barbeiro 3</LogoBarber>
-                    <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">Barbeiro 4</LogoBarber>
+                    <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">{barber[0]}</LogoBarber>
+                    <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">{barber[1]}</LogoBarber>
+                    <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">{barber[2]}</LogoBarber>
+                    <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">{barber[3]}</LogoBarber>
                 </FourthDiv>
                 <FifithDiv>
                     <ButtonCard color="#ffb34a">AGENDAR</ButtonCard>
@@ -102,4 +104,4 @@ function Rate() {
     )
 }
 
-export default Rate
+export default Schedule

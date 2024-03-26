@@ -24,20 +24,19 @@ const PrincipalDiv = styled.div`
     gap: 20px;
 `
 
-function Navbar({ name }) {
+function NavbarAdm({ name }) {
     return(
         <NavbarDiv>
             <LogoImage image="/layout-principal.jpg" width="60px" height="60px" />
             <H1>Olá {name}</H1>
             <PrincipalDiv>
                 <Link href="/home" style={{textDecoration: 'none'}}><H1>Início</H1></Link>
-                <Link href="/preindex" style={{textDecoration: 'none'}}><H1>Perfil</H1></Link>
-                <Link href="/schedule" style={{textDecoration: 'none'}}><H1>Agendamento</H1></Link>
                 <Link href="/administrative" style={{textDecoration: 'none'}}><H1>Administrativo</H1></Link>
+                <Link href="/registerbarber" style={{textDecoration: 'none'}}><H1>Cadastro</H1></Link>
                 <Link href="/" style={{textDecoration: 'none'}}><H1>Sair</H1></Link>
             </PrincipalDiv>
         </NavbarDiv>
     )
 }
 
-export default Navbar
+export default NavbarAdm
