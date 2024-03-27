@@ -1,13 +1,12 @@
 import Schedule from "./schedule.model"
 
 export const createSchedule = async (body) => {
-    try {
-        const newSchedule = Schedule.create(body)
+    return await Schedule.create({
+        date: new Date,
+        text: body.text
+    })
+}
 
-        if (newSchedule.status === 201) {
-            return newSchedule
-        }
-    } catch (err) {
-        throw err
-    }
+export const getSchedule = async () => {
+    return await Schedule.find().sort({ date: -1 })
 }

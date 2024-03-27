@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 
 const ScheduleSchema = mongoose.Schema({
     date: { type: Date, required: true },
-    barber: [{
+    Barber: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Barber'
     }],
