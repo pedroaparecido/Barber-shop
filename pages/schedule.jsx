@@ -5,7 +5,8 @@ import H1Pages from "../src/components/tipography/H1Pages"
 import Paragraph from "../src/components/tipography/Paragraph"
 import LogoBarber from "../src/components/layout/LogoBarber"
 import ButtonCard from "../src/components/Button/ButtonCard"
-import Textarea from "../src/components/tipography/Textarea"
+import Textarea from "../src/components/inputs/Textarea"
+import DateInput from '../src/components/inputs/DateInput'
 
 import { createScheduleSchema } from "../modules/shcedule/schedule.schema"
 
@@ -58,16 +59,6 @@ const SixthDiv = styled.div`
     align-items: center;
 `
 
-const DateTime = styled.input`
-    margin-top: 20px;
-    padding: 10px;
-    font-weight: bold;
-    border-radius: 10px;
-    color: #16171d;
-    background-color: #e2e4e9;
-    border: none;
-`
-
 const HR = styled.hr`
     margin-top: 40px;
     width: 95%;
@@ -75,22 +66,19 @@ const HR = styled.hr`
 
 function Schedule() {
     const { mutate } = useSWRConfig()
-    const {reset, control, handleSubmit } = useForm({
-        resolver: joiResolver(createScheduleSchema),
-        mode: 'all'
-    })
+    const {reset, register, handleSubmit } = useForm()
     const barber = ['Barbeiro 1', 'Barbeiro 2', 'Barbeiro 3', 'Barbeiro 4']
 
     const handleDate = async (data) => {
         try {
-            const response = await axios.post('/api/schedule/schedule', data)
             console.log(data)
+            const response = await axios.post('/api/schedule/schedule', data)
             if (response.status === 201) {
                 reset()
-                mutate('/api/schedule')
+                mutate('/api/schedule/schedule')
             }
         } catch (err) {
-            console.log(err)
+            //console.log(err)
         }
     }
 
@@ -100,7 +88,7 @@ function Schedule() {
             <form onSubmit={handleSubmit(handleDate)}>
                 <SecondDiv>
                         <H1Pages>AGENDE AGORA!</H1Pages>
-                        <DateTime control={control} type="datetime-local" name="dob" />
+                        <DateInput {...register('date')} type="datetime-local" name="date" />
                         <Paragraph>Escolha o melhor horário!</Paragraph>
                 </SecondDiv>
                     <ThirdDiv>
@@ -124,7 +112,7 @@ function Schedule() {
                     </ThirdDiv>
                     <SixthDiv>
                         <Paragraph weight="bold">INFORMAÇÕES ADICIONAIS</Paragraph>
-                        <Textarea control={control} rows="4" name="text" />
+                        <Textarea {...register('text')} rows="4" name="text" />
                     </SixthDiv>
                 </form>
         </PrincipalDiv>

@@ -6,8 +6,8 @@ import { createScheduleSchema } from '../../../modules/shcedule/schedule.schema'
 
 const handler = createHandler()
 
-handler.
-    post(validate({ body: createScheduleSchema }), async (req, res) => {
+handler
+    .post(validate({ body: createScheduleSchema }), async (req, res) => {
         try {
             const schedule = await createSchedule(req.body)
 
