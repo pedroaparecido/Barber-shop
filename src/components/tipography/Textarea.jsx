@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { useController } from "react-hook-form"
 
 const TextArea = styled.textarea`
     padding: 25px;
@@ -9,9 +10,13 @@ const TextArea = styled.textarea`
     border-radius: 10px;
 `
 
-function Textarea() {
+function Textarea({ name, control, ...props }) {
+    const {
+        field: { value, onChange },
+        fieldState: { error }
+    } = useController({ name, control })
     return(
-        <TextArea />
+        <TextArea value={value} onChange={onChange} />
     )
 }
 

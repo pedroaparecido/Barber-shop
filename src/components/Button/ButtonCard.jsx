@@ -18,10 +18,10 @@ const PrincipalButton = styled.button`
     cursor: pointer;
 `
 
-function ButtonCard({ children, color }) {
+function ButtonCard({ children, color, ...props }) {
     return(
         <PrincipalDiv>
-            <PrincipalButton color={color}>{children}</PrincipalButton>
+            <PrincipalButton color={color} {...props}>{children}</PrincipalButton>
         </PrincipalDiv>
     )
 }

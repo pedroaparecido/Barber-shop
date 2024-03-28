@@ -2,7 +2,7 @@ import Schedule from "./schedule.model"
 
 export const createSchedule = async (body) => {
     return await Schedule.create({
-        date: new Date,
+        date: body.date,
         text: body.text
     })
 }
