@@ -44,7 +44,7 @@ const UL = styled.ul`
 `
 
 const LI = styled.li`
-    word-spacing: 167vh;
+    word-spacing: 166vh;
     padding: 15px;
     margin-bottom: 5px;
 
@@ -67,8 +67,9 @@ const HR = styled.hr`
 const fetcher = url => axios.get(url).then(res => res.data)
 
 function Administrative({ name }) {
+    const { mutate } = useSWR()
 
-    const { data } = useSWR('/api/schedule/schedule' ,fetcher)
+    const { data } = useSWR('/api/schedule/schedule' ,fetcher, mutate('/api/schedule/schedule'))
 
     return(
         <PrincipalDiv>

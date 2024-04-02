@@ -1,12 +1,16 @@
 import styled from "styled-components"
+import { useState } from "react"
+import axios from "axios"
 
 import Navbar from "../src/components/layout/Navbar"
 import LogoImage from "../src/components/layout/LogoImage"
+import ButtonCard from "../src/components/Button/ButtonCard"
 
 const PrincipalDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 30px;
 `
 
 const SecondDiv = styled.div`
@@ -44,20 +48,42 @@ const LabelFileInput = styled.label`
 `
 
 function Preindex() {
+    const [image, setImage] = useState('')
+    const [message, setMessage] = useState()
+
+    const uploadImage = async (e) => {
+        e.preventDefault()
+        const formData = new FormData()
+        formData.append('image', image)
+
+        const headers = {
+            'headers': {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        await axios.post('http://localhost:8080/upload-image', formData, headers).then((response) => {
+            setMessage(response.data.message)
+        })
+    }
+
     return(
         <>
             <Navbar />
-            <PrincipalDiv>
-                <SecondDiv>
-                    <LogoImage image="/layout-principal.jpg" width="300px" height="300px" />
-                    <ThirdDiv>
-                        <FourthDiv>
-                            <LabelFileInput for="selecao-de-arquivo">+</LabelFileInput>
-                            <FileInput type="file" id="selecao-de-arquivo" />
-                        </FourthDiv>
-                    </ThirdDiv>
-                </SecondDiv>
-            </PrincipalDiv>
+            <form onSubmit={uploadImage}>
+                <ButtonCard type="submit" color="#ffb34a">CADASTRAR</ButtonCard>
+                <PrincipalDiv>
+                    <SecondDiv>
+                        <LogoImage image="/layout-principal.jpg" width="300px" height="300px" />
+                        <ThirdDiv>
+                            <FourthDiv>
+                                <LabelFileInput for="selecao-de-arquivo">+</LabelFileInput>
+                                <FileInput type="file" id="selecao-de-arquivo" />
+                            </FourthDiv>
+                        </ThirdDiv>
+                    </SecondDiv>
+                </PrincipalDiv>
+            </form>
         </>
     )
 }
