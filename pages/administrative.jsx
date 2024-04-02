@@ -4,6 +4,8 @@ import NavbarAdm from "../src/components/layout/NavbarAdm"
 import H1Pages from "../src/components/tipography/H1Pages"
 import Paragraph from "../src/components/tipography/Paragraph"
 import ButtonList from "../src/components/Button/ButtonList"
+import axios from "axios"
+import useSWR from "swr"
 
 const PrincipalDiv = styled.div`
     display: flex;
@@ -42,7 +44,7 @@ const UL = styled.ul`
 `
 
 const LI = styled.li`
-    word-spacing: 90vh;
+    word-spacing: 167vh;
     padding: 15px;
     margin-bottom: 5px;
 
@@ -62,7 +64,12 @@ const HR = styled.hr`
     width: 95%;
 `
 
+const fetcher = url => axios.get(url).then(res => res.data)
+
 function Administrative({ name }) {
+
+    const { data } = useSWR('/api/schedule/schedule' ,fetcher)
+
     return(
         <PrincipalDiv>
             <NavbarAdm />
@@ -75,10 +82,9 @@ function Administrative({ name }) {
                 </ThirdDiv>
                 <FourthDiv>
                     <UL>
-                        <LI>a <ButtonList backcolor="#16181d" color="#ffb34a">Editar</ButtonList><ButtonList backcolor="#16181d" color="#ffb34a">Apagar</ButtonList></LI>
-                        <LI>a <ButtonList backcolor="#ffb34a" color="#16181d">Editar</ButtonList><ButtonList backcolor="#ffb34a" color="#16181d">Apagar</ButtonList></LI>
-                        <LI>a <ButtonList backcolor="#16181d" color="#ffb34a">Editar</ButtonList><ButtonList backcolor="#16181d" color="#ffb34a">Apagar</ButtonList></LI>
-                        <LI>a <ButtonList backcolor="#ffb34a" color="#16181d">Editar</ButtonList><ButtonList backcolor="#ffb34a" color="#16181d">Apagar</ButtonList></LI>
+                        {data?.map(index => 
+                            <LI key={index._id} id={index._id}>{index.date} <ButtonList backcolor="#16181d" color="#ffb34a">Editar</ButtonList><ButtonList backcolor="#ffb34a" color="#16181d">Apagar</ButtonList></LI>
+                        )}
                     </UL>
                 </FourthDiv>
         </PrincipalDiv>
