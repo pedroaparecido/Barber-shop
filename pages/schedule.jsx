@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+import { withIronSessionSsr } from "iron-session/next"
+import { ironConfig } from "../lib/middlewares/iron-session"
+
 import Navbar from "../src/components/layout/Navbar"
 import H1Pages from "../src/components/tipography/H1Pages"
 import Paragraph from "../src/components/tipography/Paragraph"
@@ -64,7 +67,7 @@ const HR = styled.hr`
     width: 95%;
 `
 
-function Schedule() {
+function Schedule({ user }) {
     const { mutate } = useSWRConfig()
     const {reset, register, handleSubmit } = useForm()
     const barber = ['Barbeiro 1', 'Barbeiro 2', 'Barbeiro 3', 'Barbeiro 4']
@@ -84,7 +87,7 @@ function Schedule() {
 
     return(
         <PrincipalDiv>
-            <Navbar />
+            <Navbar name={user.user} />
             <form onSubmit={handleSubmit(handleDate)}>
                 <SecondDiv>
                         <H1Pages>AGENDE AGORA!</H1Pages>
@@ -118,5 +121,28 @@ function Schedule() {
         </PrincipalDiv>
     )
 }
+
+export const getServerSideProps = withIronSessionSsr(
+    async function getServerSideProps({ req }) {
+        const user = req.session.user
+
+        if (!user) {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: '/'
+                }
+            }
+        }
+        console.log(user)
+
+        return {
+            props: {
+                user
+            }
+        }
+    },
+    ironConfig
+)
 
 export default Schedule

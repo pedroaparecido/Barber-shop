@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import { useState } from "react"
 import axios from "axios"
+import { withIronSessionSsr } from 'iron-session/next'
+import { ironConfig } from "../lib/middlewares/iron-session"
 
 import Navbar from "../src/components/layout/Navbar"
 import LogoImage from "../src/components/layout/LogoImage"
@@ -47,7 +49,7 @@ const LabelFileInput = styled.label`
   padding: 5px 10px;
 `
 
-function Preindex() {
+function Preindex({ user }) {
     const [image, setImage] = useState('')
     const [message, setMessage] = useState()
 
@@ -69,7 +71,7 @@ function Preindex() {
 
     return(
         <>
-            <Navbar />
+            <Navbar name={user.user} />
             <form onSubmit={uploadImage}>
                 <ButtonCard type="submit" color="#ffb34a">CADASTRAR</ButtonCard>
                 <PrincipalDiv>
@@ -87,5 +89,27 @@ function Preindex() {
         </>
     )
 }
+
+export const getServerSideProps = withIronSessionSsr(
+    async function getServerSideProps({ req }) {
+        const user = req.session.user
+
+        if (!user) {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: '/'
+                }
+            }
+        }
+
+        return {
+            props: {
+                user
+            }
+        }
+    },
+    ironConfig
+)
 
 export default Preindex

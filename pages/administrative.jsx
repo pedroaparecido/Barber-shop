@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+import { withIronSessionSsr } from "iron-session/next"
+import { ironConfig } from "../lib/middlewares/iron-session"
+
 import NavbarAdm from "../src/components/layout/NavbarAdm"
 import H1Pages from "../src/components/tipography/H1Pages"
 import Paragraph from "../src/components/tipography/Paragraph"
@@ -44,7 +47,7 @@ const UL = styled.ul`
 `
 
 const LI = styled.li`
-    word-spacing: 166vh;
+    word-spacing: 160vh;
     padding: 15px;
     margin-bottom: 5px;
 
@@ -66,16 +69,16 @@ const HR = styled.hr`
 
 const fetcher = url => axios.get(url).then(res => res.data)
 
-function Administrative({ name }) {
+function Administrative({ user }) {
     const { mutate } = useSWR()
 
     const { data } = useSWR('/api/schedule/schedule' ,fetcher, mutate('/api/schedule/schedule'))
 
     return(
         <PrincipalDiv>
-            <NavbarAdm />
+            <NavbarAdm name={user.user} />
             <SecondDiv>
-                    <H1Pages>OLÁ {name}</H1Pages>
+                    <H1Pages>OLÁ {user.user}</H1Pages>
                     <Paragraph>HORÁRIOS MARCADOS:</Paragraph>
             </SecondDiv>
                 <ThirdDiv>
@@ -91,5 +94,28 @@ function Administrative({ name }) {
         </PrincipalDiv>
     )
 }
+
+export const getServerSideProps = withIronSessionSsr(
+    async function getServerSideProps({ req }) {
+        const user = req.session.user
+
+        if (!user) {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: '/'
+                }
+            }
+        }
+        console.log(user)
+
+        return {
+            props: {
+                user
+            }
+        }
+    },
+    ironConfig
+)
 
 export default Administrative

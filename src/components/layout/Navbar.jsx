@@ -1,8 +1,10 @@
 import styled from "styled-components"
+import axios from "axios"
 
 import H1 from '../tipography/TipoNavbar'
 import LogoImage from "./LogoImage"
 import Link from "next/link"
+import { useRouter } from "next/router"
 
 const NavbarDiv = styled.div`
     padding: 25px;
@@ -24,17 +26,28 @@ const PrincipalDiv = styled.div`
     gap: 20px;
 `
 
+const StyledLogout = styled.a`
+    cursor: pointer;
+`
+
 function Navbar({ name }) {
+    const router = useRouter()
+
+    const handleLogout = async () => {
+        await axios.post('/api/user/logout')
+        router.push('/')
+    }
+
     return(
         <NavbarDiv>
             <LogoImage image="/layout-principal.jpg" width="60px" height="60px" />
-            <H1>Olá {name}</H1>
+            <H1 name={name}>Olá {name}</H1>
             <PrincipalDiv>
                 <Link href="/home" style={{textDecoration: 'none'}}><H1>Início</H1></Link>
                 <Link href="/preindex" style={{textDecoration: 'none'}}><H1>Perfil</H1></Link>
                 <Link href="/schedule" style={{textDecoration: 'none'}}><H1>Agendamento</H1></Link>
                 <Link href="/administrative" style={{textDecoration: 'none'}}><H1>Administrativo</H1></Link>
-                <Link href="/" style={{textDecoration: 'none'}}><H1>Sair</H1></Link>
+                <StyledLogout onClick={handleLogout} style={{textDecoration: 'none'}}><H1>Sair</H1></StyledLogout>
             </PrincipalDiv>
         </NavbarDiv>
     )

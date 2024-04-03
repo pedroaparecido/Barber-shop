@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+import { withIronSessionSsr } from "iron-session/next"
+import { ironConfig } from "../lib/middlewares/iron-session"
+
 import Navbar from "../src/components/layout/Navbar"
 import LogoImage from "../src/components/layout/LogoImage"
 import ButtonCard from '../src/components/Button/ButtonCard'
@@ -53,7 +56,7 @@ const LabelFileInput = styled.label`
   padding: 5px 10px;
 `
 
-function RegisterBarber() {
+function RegisterBarber({ user }) {
     const [image, setImage] = useState('')
     const [message, setMessage] = useState()
 
@@ -75,7 +78,7 @@ function RegisterBarber() {
 
     return(
         <>
-            <Navbar />
+            <Navbar name={user.user} />
             <PrincipalDiv>
                 <form onSubmit={uploadImage}>
                     <SecondDiv>
@@ -95,5 +98,28 @@ function RegisterBarber() {
         </>
     )
 }
+
+export const getServerSideProps = withIronSessionSsr(
+    async function getServerSideProps({ req }) {
+        const user = req.session.user
+
+        if (!user) {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: '/'
+                }
+            }
+        }
+        console.log(user)
+
+        return {
+            props: {
+                user
+            }
+        }
+    },
+    ironConfig
+)
 
 export default RegisterBarber

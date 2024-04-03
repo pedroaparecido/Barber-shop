@@ -1,4 +1,7 @@
 import styled from "styled-components"
+import { withIronSessionSsr } from 'iron-session/next'
+
+import { ironConfig } from '../lib/middlewares/iron-session'
 
 import Navbar from "../src/components/layout/Navbar"
 import CardBarber from "../src/components/layout/CardBarber"
@@ -11,10 +14,10 @@ const PrincipalDiv = styled.div`
     justify-content: center;
 `
 
-function Home() {
+function Home({ user }) {
     return(
         <>
-            <Navbar />
+            <Navbar name={user.user} />
             <PrincipalDiv>
                 <CardBarber color="#ffb34a"><LogoImage height="100px" width="100px" /></CardBarber>
                 <CardBarber color="#ebc185"><LogoImage height="100px" width="100px" /></CardBarber>
@@ -26,5 +29,27 @@ function Home() {
         </>
     )
 }
+
+export const getServerSideProps = withIronSessionSsr(
+    async function getServerSideProps({ req }) {
+        const user = req.session.user
+
+        if (!user) {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: '/'
+                }
+            }
+        }
+
+        return {
+            props: {
+                user
+            }
+        }
+    },
+    ironConfig
+)
 
 export default Home
