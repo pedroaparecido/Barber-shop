@@ -3,7 +3,7 @@ const Barber = require('../../modules/barber/barber.model.node')
 exports.create = async (req, res) => {
     try {
         const {name} = req.body
-        console.log(name)
+        
         const file = req.file
 
         const image = new Barber({

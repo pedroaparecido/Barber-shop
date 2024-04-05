@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { useController } from "react-hook-form"
+import { forwardRef } from "react"
 
 const PrincipalDiv = styled.div`
     padding-top: 10px;
@@ -31,17 +32,17 @@ const errorMessage = {
     'duplicated': 'Email ou usuário já existe'
 }
 
-const Input = ({ name, control, defaultValue = '', ...props }) => {
+const Input = forwardRef(({ name, control, defaultValue = '', ...props }, ref) => {
     const {
         field: { value, onChange },
         fieldState: { error }
     } = useController({ name, control, defaultValue })
     return(
         <PrincipalDiv>
-            <PrincipalInput {...props} error={error} value={value} onChange={onChange} />
+            <PrincipalInput {...props} error={error} value={value} onChange={onChange} ref={ref} />
             {error && <Error>{errorMessage[error.type] || error.message}</Error>}
         </PrincipalDiv>
     )
-}
+})
 
 export default Input

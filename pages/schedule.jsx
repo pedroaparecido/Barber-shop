@@ -74,14 +74,13 @@ function Schedule({ user }) {
 
     const handleDate = async (data) => {
         try {
-            console.log(data)
             const response = await axios.post('/api/schedule/schedule', data)
             if (response.status === 201) {
                 reset()
                 mutate('/api/schedule/schedule')
             }
         } catch (err) {
-            //console.log(err)
+            console.log(err)
         }
     }
 
@@ -134,7 +133,6 @@ export const getServerSideProps = withIronSessionSsr(
                 }
             }
         }
-        console.log(user)
 
         return {
             props: {

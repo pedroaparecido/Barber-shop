@@ -56,21 +56,12 @@ function Loginadm() {
     const handleForm = async (data) => {
         try {
             const response = await axios.post('/api/administrative/login', data)
-            console.log(data.password)
 
             if (response.status === 200) {
                 router.push('/administrative')
             }
         } catch ({ response }) {
-            if (response.data === 'incorrect password') {
-                setError('password', {
-                    message: 'A senha está incorreta'
-                })
-            } else if (response.data === 'not found') {
-                setError('userOrEmail', {
-                    message: 'Usuário ou email não encontrado'
-                })
-            }
+            console.log(response)
         }
     }
 
