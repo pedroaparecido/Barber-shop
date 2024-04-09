@@ -1,3 +1,4 @@
+import { forwardRef } from "react"
 import styled from "styled-components"
 
 const FirstDiv = styled.div`
@@ -6,7 +7,7 @@ const FirstDiv = styled.div`
     align-items: center;
 `
 
-const Image = styled.div`
+const Image = styled.label`
     background-image: url('${props => props.image}');
     background-size: cover;
     background-repeat: no-repeat;
@@ -22,19 +23,31 @@ const Image = styled.div`
     }
 `
 
-const Span = styled.span`
+const Label = styled.label`
     padding-top: 10px;
     font-size: 16px;
     color: #999999;
 `
 
-function LogoBarber({ image, width, height, children }) {
+const FileInput = styled.input`
+    display: none;
+`
+
+const Check = styled.input`
+    
+    &:checked + label {
+        border: 10px solid #ffb34a;
+    }
+`
+
+const LogoBarber = forwardRef(({ image, border, width, height, children, lang, props }, ref) => {
     return(
-        <FirstDiv>
-            <Image image={image} height={height} width={width} />
-            <Span>{children}</Span>
+        <FirstDiv lang={lang}>
+            <Check type="checkbox"/>
+            <Image image={image} border={border} height={height} width={width} />
+            <Label ref={ref} {...props} >{children}</Label>
         </FirstDiv>
     )
-}
+})
 
 export default LogoBarber

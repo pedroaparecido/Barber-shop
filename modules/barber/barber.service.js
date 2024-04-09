@@ -10,3 +10,7 @@ export const createBarber = async (body) => {
 export const getBarber = async () => {
     return Barber.find()
 }
+
+export const getOneBarber = async (body) => {
+    return Barber.findOne({ body }).select()
+}

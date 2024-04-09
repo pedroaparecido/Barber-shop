@@ -14,9 +14,10 @@ import DateInput from '../src/components/inputs/DateInput'
 import { createScheduleSchema } from "../modules/shcedule/schedule.schema"
 
 import { useForm } from "react-hook-form"
-import { useSWRConfig } from "swr"
+import useSWR, { useSWRConfig } from "swr"
 import { joiResolver } from '@hookform/resolvers/joi'
 import axios from "axios"
+import { useState } from "react"
 
 const PrincipalDiv = styled.div`
     display: flex;
@@ -67,10 +68,13 @@ const HR = styled.hr`
     width: 95%;
 `
 
+const fetcher = url => axios.get(url).then(res => res.data)
+
 function Schedule({ user }) {
     const { mutate } = useSWRConfig()
-    const {reset, register, handleSubmit } = useForm()
-    const barber = ['Barbeiro 1', 'Barbeiro 2', 'Barbeiro 3', 'Barbeiro 4']
+    const {reset, register, handleSubmit } = useForm({
+        resolver: joiResolver(createScheduleSchema)
+    })
 
     const handleDate = async (data) => {
         try {
@@ -83,6 +87,8 @@ function Schedule({ user }) {
             console.log(err)
         }
     }
+
+    const { data } = useSWR('/api/barber/barber', fetcher)
 
     return(
         <PrincipalDiv>
@@ -100,10 +106,11 @@ function Schedule({ user }) {
                         <Paragraph weight="bold">ESCOLHA O BARBEIRO</Paragraph>
                     </SecondDiv>
                     <FourthDiv>
-                        <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">{barber[0]}</LogoBarber>
-                        <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">{barber[1]}</LogoBarber>
-                        <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">{barber[2]}</LogoBarber>
-                        <LogoBarber height="100px" width="100px" image="/layout-principal.jpg">{barber[3]}</LogoBarber>
+                            {
+                                data?.map(index => 
+                                    <LogoBarber {...register('title')} name="title" key={index._id} id={index._id} height="100px" width="100px" image={index.image} >{index.title}</LogoBarber>
+                                )
+                            }
                     </FourthDiv>
                     <FifithDiv>
                         <ButtonCard color="#ffb34a" type="submit">AGENDAR</ButtonCard>

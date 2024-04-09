@@ -99,11 +99,11 @@ export const getServerSideProps = withIronSessionSsr(
     async function getServerSideProps({ req }) {
         const user = req.session.user
 
-        if (!user) {
+        if (!user.adm) {
             return {
                 redirect: {
                     permanent: false,
-                    destination: '/'
+                    destination: '/loginadm'
                 }
             }
         }

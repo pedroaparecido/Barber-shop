@@ -4,7 +4,8 @@ const ScheduleSchema = mongoose.Schema({
     date: { type: Date, required: true },
     Barber: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Barber'
+        ref: 'Barber',
+        required: true
     }],
     text: { type: String }
 })

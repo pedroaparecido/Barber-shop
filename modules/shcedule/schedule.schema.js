@@ -5,6 +5,6 @@ export const createScheduleSchema = Joi.object({
     Barber: Joi.object({
         title: Joi.string(),
         image: Joi.any()
-    }),
+    }).required(),
     text: Joi.string()
 })
