@@ -1,3 +1,4 @@
+import { StrictMode } from "react"
 import { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`
@@ -15,10 +16,10 @@ const GlobalStyle = createGlobalStyle`
 
 function App({ Component, pageProps}) {
     return(
-        <>
+        <StrictMode>
             <GlobalStyle />
             <Component {...pageProps} />
-        </>
+        </StrictMode>
     )
 }
 

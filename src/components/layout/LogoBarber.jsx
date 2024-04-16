@@ -1,4 +1,5 @@
 import { forwardRef } from "react"
+import { useController } from "react-hook-form"
 import styled from "styled-components"
 
 const FirstDiv = styled.div`
@@ -40,12 +41,16 @@ const Check = styled.input`
     }
 `
 
-const LogoBarber = forwardRef(({ image, border, width, height, children, lang, props }, ref) => {
+const LogoBarber = forwardRef(({ name, control, defaultValue = '', image, border, width, height, children, lang, props }, ref) => {
+    const {
+        field: { value, onChange },
+        fieldState: { error }
+    } = useController({ name, control, defaultValue })
     return(
         <FirstDiv lang={lang}>
-            <Check type="checkbox"/>
+            <Check ref={ref} value={value} onChange={onChange} {...props} type="checkbox"/>
             <Image image={image} border={border} height={height} width={width} />
-            <Label ref={ref} {...props} >{children}</Label>
+            <Label>{children}</Label>
         </FirstDiv>
     )
 })

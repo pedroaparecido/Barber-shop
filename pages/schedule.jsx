@@ -72,20 +72,23 @@ const fetcher = url => axios.get(url).then(res => res.data)
 
 function Schedule({ user }) {
     const { mutate } = useSWRConfig()
-    const {reset, register, handleSubmit } = useForm({
-        resolver: joiResolver(createScheduleSchema)
-    })
+    const {reset, register, handleSubmit, control, formState: { errors } } = useForm()
 
     const handleDate = async (data) => {
         try {
             const response = await axios.post('/api/schedule/schedule', data)
-            if (response.status === 201) {
+            if (response.status === 201 && getBarber.status === 200) {
                 reset()
-                mutate('/api/schedule/schedule')
             }
         } catch (err) {
             console.log(err)
         }
+    }
+
+    const handlePopulate = async (data) => {
+        const populate = await axios.get('/api/schedule/schedule2', data)
+        if (populate.status === 200)
+            reset()
     }
 
     const { data } = useSWR('/api/barber/barber', fetcher)
@@ -93,37 +96,41 @@ function Schedule({ user }) {
     return(
         <PrincipalDiv>
             <Navbar name={user.user} />
-            <form onSubmit={handleSubmit(handleDate)}>
-                <SecondDiv>
-                        <H1Pages>AGENDE AGORA!</H1Pages>
-                        <DateInput {...register('date')} type="datetime-local" name="date" />
-                        <Paragraph>Escolha o melhor horário!</Paragraph>
-                </SecondDiv>
-                    <ThirdDiv>
-                        <HR />
-                    </ThirdDiv>
-                    <SecondDiv>
-                        <Paragraph weight="bold">ESCOLHA O BARBEIRO</Paragraph>
-                    </SecondDiv>
-                    <FourthDiv>
-                            {
-                                data?.map(index => 
-                                    <LogoBarber {...register('title')} name="title" key={index._id} id={index._id} height="100px" width="100px" image={index.image} >{index.title}</LogoBarber>
-                                )
-                            }
-                    </FourthDiv>
-                    <FifithDiv>
-                        <ButtonCard color="#ffb34a" type="submit">AGENDAR</ButtonCard>
-                        <ButtonCard color="#ebc185">CANCELAR</ButtonCard>
-                    </FifithDiv>
-                    <ThirdDiv>
-                        <HR />
-                    </ThirdDiv>
-                    <SixthDiv>
-                        <Paragraph weight="bold">INFORMAÇÕES ADICIONAIS</Paragraph>
-                        <Textarea {...register('text')} rows="4" name="text" />
-                    </SixthDiv>
+            <SecondDiv>
+                <form onSubmit={handleSubmit(handleDate)}>
+                    <H1Pages>AGENDE AGORA!</H1Pages>
+                    <DateInput {...register('date')} type="datetime-local" name="date" />
+                    <Paragraph>Escolha o melhor horário!</Paragraph>
+                    <HR />
+                    <Paragraph weight="bold">INFORMAÇÕES ADICIONAIS</Paragraph>
+                    <Textarea {...register('text')} rows="4" name="text" />
+                    <ButtonCard color="#ffb34a" type="submit">AGENDAR</ButtonCard>
+                    <ButtonCard color="#ebc185">CANCELAR</ButtonCard>
                 </form>
+            </SecondDiv>
+            <ThirdDiv>
+                <HR />
+            </ThirdDiv>
+            <SecondDiv>
+                <Paragraph weight="bold">ESCOLHA O BARBEIRO</Paragraph>
+            </SecondDiv>
+            <form onSubmit={handleSubmit(handlePopulate)}>
+                <FourthDiv>
+                        {
+                            data?.map(index => 
+                                <LogoBarber {...register('title')} control={control} name="title" key={index._id} id={index._id} height="100px" width="100px" image={index.image} >{index.title}</LogoBarber>
+                            )
+                        }
+                </FourthDiv>
+            <FifithDiv>
+                <ButtonCard color="#ffb34a" type="submit">AGENDAR</ButtonCard>
+                <ButtonCard color="#ebc185">CANCELAR</ButtonCard>
+            </FifithDiv>
+            </form>
+            <ThirdDiv>
+            </ThirdDiv>
+            <SixthDiv>
+            </SixthDiv>
         </PrincipalDiv>
     )
 }

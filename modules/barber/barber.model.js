@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 const BarberSchema = mongoose.Schema({
-    title: { type: String },
+    title: { type: String, required: true },
     image: { type: Buffer }
 })
 

@@ -1,7 +1,7 @@
 import createHandler from '../../../lib/middlewares/nextConnect'
 import validate from '../../../lib/middlewares/validation'
 
-import { createBarber, getBarber, findBarber } from '../../../modules/barber/barber.service'
+import { createBarber, getBarber } from '../../../modules/barber/barber.service'
 import { createBarberSchema } from '../../../modules/barber/barber.schema'
 
 const handler = createHandler()
@@ -21,15 +21,6 @@ handler
             const barber = await getBarber()
 
             res.status(200).send(barber)
-        } catch (err) {
-            res.status(500).send(err)
-        }
-    })
-    .post(validate({ body: createBarberSchema }), async (req, res) => {
-        try {
-            const findABarber = await findBarber()
-
-            res.status(200).send(findABarber)
         } catch (err) {
             res.status(500).send(err)
         }
