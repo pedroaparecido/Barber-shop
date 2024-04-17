@@ -14,12 +14,12 @@ const handler = createHandler()
 
 handler.post(validate({ body: admLoginSchema }), async (req, res) => {
     try {
-        const adminUser = login(req.body)
+        const adminUser = await login(req.body)
         
         if (req.body.password === process.env.ADMIN_PASSWORD) {
             req.session.user = {
                 id: adminUser._id,
-                user: adminUser.user,
+                user: adminUser.adminUser,
                 admin: true
             }
             await req.session.save()

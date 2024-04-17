@@ -77,7 +77,7 @@ function Schedule({ user }) {
     const handleDate = async (data) => {
         try {
             const response = await axios.post('/api/schedule/schedule', data)
-            if (response.status === 201 && getBarber.status === 200) {
+            if (response.status === 201) {
                 reset()
             }
         } catch (err) {
@@ -86,7 +86,9 @@ function Schedule({ user }) {
     }
 
     const handlePopulate = async (data) => {
+        const getBarber = await axios.get('/api/barber/barber2', data)
         const populate = await axios.get('/api/schedule/schedule2', data)
+        console.log(populate)
         if (populate.status === 200)
             reset()
     }

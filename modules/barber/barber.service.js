@@ -11,3 +11,7 @@ export const createBarber = async (body) => {
 export const getBarber = async () => {
     return await Barber.find()
 }
+
+export const getOneBarber = async () => {
+    return await Barber.findOne().populate('_id', 'schedule')
+}

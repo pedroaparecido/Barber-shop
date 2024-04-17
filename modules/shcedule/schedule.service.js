@@ -4,7 +4,8 @@ import Barber from '../barber/barber.model'
 export const createSchedule = async (body) => {
     return await Schedule.create({
         date: body.date,
-        text: body.text
+        text: body.text,
+        id: body.id
     })
 }
 
@@ -13,6 +14,6 @@ export const getSchedule = async () => {
 }
 
 
-export const getOneBarber = async () => {
-    return await Schedule.findOne().populate('Barber', 'barber')
+export const getOneSchedule = async () => {
+    return await Schedule.findOne().populate('barber', 'barber')
 }

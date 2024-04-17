@@ -33,7 +33,7 @@ const ThirdDiv = styled.div`
 const FourthDiv = styled.div`
     background-color: #e2e4e9;
     width: 100%;
-    height: 60vh;
+    height: 100%;
     color: #16181d;
     display: flex;
     flex-direction: column;
@@ -99,7 +99,7 @@ export const getServerSideProps = withIronSessionSsr(
     async function getServerSideProps({ req }) {
         const user = req.session.user
 
-        if (!user.adm) {
+        if (!user) {
             return {
                 redirect: {
                     permanent: false,
