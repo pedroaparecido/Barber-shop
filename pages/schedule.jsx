@@ -76,22 +76,33 @@ function Schedule({ user }) {
 
     const handleDate = async (data) => {
         try {
-            const response = await axios.post('/api/schedule/schedule', data)
+            // Realiza uma requisição para obter os dados do barbeiro
+            const getBarber = await axios.get('/api/barber/barber2');
+            const barberId = getBarber.data._id; // Supondo que o ID do barber esteja em getBarber.data._id
+    
+            // Cria um objeto contendo os dados do agendamento, incluindo o ID do barber
+            
+    
+            // Realiza uma requisição para criar o agendamento, incluindo os dados do agendamento
+            const response = await axios.post('/api/schedule/schedule', data);
+            
             if (response.status === 201) {
-                reset()
+                reset();
             }
         } catch (err) {
-            console.log(err)
+            console.error(err);
         }
     }
+    
 
     const handlePopulate = async (data) => {
-        const getBarber = await axios.get('/api/barber/barber2', data)
-        const populate = await axios.get('/api/schedule/schedule2', data)
-        console.log(populate)
+        const getBarber = await axios.get('/api/barber/barber2')
+        const populate = await axios.post('/api/schedule/schedule2', data)
+        
         if (populate.status === 200)
             reset()
     }
+    
 
     const { data } = useSWR('/api/barber/barber', fetcher)
 

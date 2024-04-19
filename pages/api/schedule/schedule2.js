@@ -5,15 +5,15 @@ import { getOneSchedule } from '../../../modules/shcedule/schedule.service'
 
 const handler = createHandler()
 
-handler
-    .get(async (req, res) => {
-        try {
-            const findSchedule = await getOneSchedule(req.body)
+handler.post(async (req, res) => {
+    try {
+        const findSchedule = await getOneSchedule(req.body);
+        console.log(findSchedule)
+        res.status(200).send(findSchedule);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
 
-            res.status(200).send(findSchedule)
-        } catch (err) {
-            res.status(500).send(err.message)
-        }
-    })
 
 export default handler

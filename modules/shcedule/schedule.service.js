@@ -5,7 +5,8 @@ export const createSchedule = async (body) => {
     return await Schedule.create({
         date: body.date,
         text: body.text,
-        id: body.id
+        _id: body._id,
+        barber: body.barber
     })
 }
 
@@ -15,5 +16,5 @@ export const getSchedule = async () => {
 
 
 export const getOneSchedule = async () => {
-    return await Schedule.findOne().populate('barber', 'barber')
+    return await Schedule.findOne().populate('barber')
 }
