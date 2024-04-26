@@ -78,16 +78,22 @@ function Schedule({ user }) {
         try {
             // Realiza uma requisição para obter os dados do barbeiro
             const getBarber = await axios.get('/api/barber/barber2');
-            const barberId = getBarber.data._id; // Supondo que o ID do barber esteja em getBarber.data._id
-    
+            const barber = getBarber.data; // Supondo que o ID do barber esteja em getBarber.data._id
+            
             // Cria um objeto contendo os dados do agendamento, incluindo o ID do barber
+            const scheduleData = {
+                date: data.date,
+                text: data.text,
+                barber: barber // Passando todos os dados do barbeiro
+            };
             
-    
+            
             // Realiza uma requisição para criar o agendamento, incluindo os dados do agendamento
-            const response = await axios.post('/api/schedule/schedule', data);
-            
+            const response = await axios.post('/api/schedule/schedule', scheduleData);
             if (response.status === 201) {
-                reset();
+                const schedule = await axios.get(`http://localhost:8080/api/schedule/${response.data._id}`);
+                if (schedule.status === 200)
+                    reset();
             }
         } catch (err) {
             console.error(err);
@@ -96,12 +102,19 @@ function Schedule({ user }) {
     
 
     const handlePopulate = async (data) => {
-        const getBarber = await axios.get('/api/barber/barber2')
-        const populate = await axios.post('/api/schedule/schedule2', data)
-        
-        if (populate.status === 200)
-            reset()
+        try {
+            const scheduleId = await axios.get('/api/barber/barber2');
+            
+            const response = await axios.get(`http://localhost:8080/api/schedule/${scheduleId.data._id}`);
+            const fetchedSchedule = response.data;
+            if (response.status === 200) {
+                reset();
+            }
+        } catch (error) {
+            console.error('Erro ao popular agendamento:', error);
+        }
     }
+    
     
 
     const { data } = useSWR('/api/barber/barber', fetcher)
@@ -109,8 +122,8 @@ function Schedule({ user }) {
     return(
         <PrincipalDiv>
             <Navbar name={user.user} />
-            <SecondDiv>
                 <form onSubmit={handleSubmit(handleDate)}>
+            <SecondDiv>
                     <H1Pages>AGENDE AGORA!</H1Pages>
                     <DateInput {...register('date')} type="datetime-local" name="date" />
                     <Paragraph>Escolha o melhor horário!</Paragraph>
@@ -119,7 +132,7 @@ function Schedule({ user }) {
                     <Textarea {...register('text')} rows="4" name="text" />
                     <ButtonCard color="#ffb34a" type="submit">AGENDAR</ButtonCard>
                     <ButtonCard color="#ebc185">CANCELAR</ButtonCard>
-                </form>
+
             </SecondDiv>
             <ThirdDiv>
                 <HR />
@@ -127,7 +140,7 @@ function Schedule({ user }) {
             <SecondDiv>
                 <Paragraph weight="bold">ESCOLHA O BARBEIRO</Paragraph>
             </SecondDiv>
-            <form onSubmit={handleSubmit(handlePopulate)}>
+
                 <FourthDiv>
                         {
                             data?.map(index => 
@@ -136,8 +149,7 @@ function Schedule({ user }) {
                         }
                 </FourthDiv>
             <FifithDiv>
-                <ButtonCard color="#ffb34a" type="submit">AGENDAR</ButtonCard>
-                <ButtonCard color="#ebc185">CANCELAR</ButtonCard>
+
             </FifithDiv>
             </form>
             <ThirdDiv>

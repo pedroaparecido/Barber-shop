@@ -1,13 +1,14 @@
 import createHandler from '../../../lib/middlewares/nextConnect'
 import validate from '../../../lib/middlewares/validation'
 
-import { getOneSchedule } from '../../../modules/shcedule/schedule.service'
+import Schedule from '../../../modules/shcedule/schedule.model'
+import { getScheduleWithBarberInfo } from '../../../modules/shcedule/schedule.service'
 
 const handler = createHandler()
 
-handler.post(async (req, res) => {
+handler.get(async (req, res) => {
     try {
-        const findSchedule = await getOneSchedule(req.body);
+        const findSchedule = await getScheduleWithBarberInfo(req.body);
         console.log(findSchedule)
         res.status(200).send(findSchedule);
     } catch (err) {

@@ -11,9 +11,9 @@ const DateTime = styled.input`
     border: none;
 `
 
-const DateInput = forwardRef(({ name, type, ...props }, ref) => {
+const DateInput = forwardRef(({ name, control, type, ...props }, ref) => {
     return(
-        <DateTime name={name} type={type} ref={ref} {...props} />
+        <DateTime name={name} control={control} type={type} ref={ref} {...props} />
     )
 })
 

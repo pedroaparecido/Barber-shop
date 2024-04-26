@@ -1,3 +1,6 @@
+// Importe os modelos Schedule e Barber
+const Schedule = require('../../../modules/shcedule/schedule.model.node');
+const Barber = require('../../../modules/barber/barber.model.node');
 const express = require('express');
 const cors = require('cors')
 const path = require('path')
@@ -18,9 +21,33 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get("/list-image", imageController.findAll, async (req, res) => {
-    await image
+
+// Rota para buscar um agendamento com informações do barbeiro
+app.get('/api/schedule/:scheduleId', async (req, res) => {
+  try {
+    // Busca o agendamento pelo ID
+    const schedule = await Schedule.findById(req.params.scheduleId).populate('barber')
+    
+    
+    // Verifica se o agendamento existe
+    if (!schedule) {
+      return res.status(404).json({ message: 'Agendamento não encontrado' });
+    }
+    
+    // Busca as informações do barbeiro associado ao agendamento
+    const barber = await Barber.findById(schedule.barber);
+    
+    // Adiciona as informações do barbeiro ao objeto do agendamento
+    schedule.barber = barber;
+
+    // Retorna o agendamento com as informações do barbeiro
+    res.status(200).send(schedule);
+  } catch (error) {
+    console.error('Erro ao buscar detalhes do agendamento:', error);
+    res.status(500).send(error)
+  }
 })
+
 
 app.post('/upload-image', uploadUser.single('image'), imageController.create, async (req, res) => {
     if (req.file) {

@@ -9,6 +9,7 @@ import Paragraph from "../src/components/tipography/Paragraph"
 import ButtonList from "../src/components/Button/ButtonList"
 import axios from "axios"
 import useSWR from "swr"
+import { useEffect, useState } from "react"
 
 const PrincipalDiv = styled.div`
     display: flex;
@@ -70,9 +71,19 @@ const HR = styled.hr`
 const fetcher = url => axios.get(url).then(res => res.data)
 
 function Administrative({ user }) {
+    const [title, setTitle] = useState([])
     const { mutate } = useSWR()
 
     const { data } = useSWR('/api/schedule/schedule' ,fetcher, mutate('/api/schedule/schedule'))
+
+    useEffect(() => {
+        const getTitle = async () => {
+            const result = await axios.get(`/api/barber/barber2`)
+            setTitle(result.data)
+        }
+
+        getTitle()
+    }, [])
 
     return(
         <PrincipalDiv>
@@ -85,11 +96,13 @@ function Administrative({ user }) {
                     <HR />
                 </ThirdDiv>
                 <FourthDiv>
-                    <UL>
-                        {data?.map(index => 
-                            <LI key={index._id} id={index._id}>{index.date} <ButtonList backcolor="#16181d" color="#ffb34a">Editar</ButtonList><ButtonList backcolor="#ffb34a" color="#16181d">Apagar</ButtonList></LI>
-                        )}
-                    </UL>
+                    {title && (
+                        <UL>
+                            {data?.map(index => 
+                                <LI key={index._id} id={index._id}>{index.date}{title.title} <ButtonList backcolor="#16181d" color="#ffb34a">Editar</ButtonList><ButtonList backcolor="#ffb34a" color="#16181d">Apagar</ButtonList></LI>
+                            )}
+                        </UL>
+                    )}
                 </FourthDiv>
         </PrincipalDiv>
     )

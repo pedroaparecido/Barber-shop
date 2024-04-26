@@ -1,13 +1,13 @@
-import mongoose from "mongoose"
+const mongoose = require("mongoose")
 
 const ScheduleSchema = mongoose.Schema({
     date: { type: Date, required: true },
     barber: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Barber'
+        ref: 'Barber',
+        required: true
     },
     text: { type: String }
 })
 
-export default mongoose.models.Schedule || mongoose.model('Schedule', ScheduleSchema)
+module.exports = mongoose.models.Schedule || mongoose.model('Schedule', ScheduleSchema)

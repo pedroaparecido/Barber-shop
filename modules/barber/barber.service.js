@@ -13,5 +13,5 @@ export const getBarber = async () => {
 }
 
 export const getOneBarber = async () => {
-    return await Barber.findOne().populate('_id', 'schedule')
+    return await Barber.findOne()
 }
