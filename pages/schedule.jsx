@@ -74,12 +74,18 @@ function Schedule({ user }) {
     const { mutate } = useSWRConfig()
     const {reset, register, handleSubmit, control, formState: { errors } } = useForm()
 
+    const [checked, setChecked] = useState();
+
+    const handleClick = (barberId) => {
+        setChecked(barberId)
+    }
+
     const handleDate = async (data) => {
         try {
             // Realiza uma requisição para obter os dados do barbeiro
-            const getBarber = await axios.get('/api/barber/barber2');
+            const getBarber = await axios.get(`http://localhost:8080/api/barber/${checked}`);
             const barber = getBarber.data; // Supondo que o ID do barber esteja em getBarber.data._id
-            
+
             // Cria um objeto contendo os dados do agendamento, incluindo o ID do barber
             const scheduleData = {
                 date: data.date,
@@ -87,7 +93,7 @@ function Schedule({ user }) {
                 barber: barber // Passando todos os dados do barbeiro
             };
             
-            
+
             // Realiza uma requisição para criar o agendamento, incluindo os dados do agendamento
             const response = await axios.post('/api/schedule/schedule', scheduleData);
             if (response.status === 201) {
@@ -99,23 +105,6 @@ function Schedule({ user }) {
             console.error(err);
         }
     }
-    
-
-    const handlePopulate = async (data) => {
-        try {
-            const scheduleId = await axios.get('/api/barber/barber2');
-            
-            const response = await axios.get(`http://localhost:8080/api/schedule/${scheduleId.data._id}`);
-            const fetchedSchedule = response.data;
-            if (response.status === 200) {
-                reset();
-            }
-        } catch (error) {
-            console.error('Erro ao popular agendamento:', error);
-        }
-    }
-    
-    
 
     const { data } = useSWR('/api/barber/barber', fetcher)
 
@@ -142,11 +131,25 @@ function Schedule({ user }) {
             </SecondDiv>
 
                 <FourthDiv>
-                        {
-                            data?.map(index => 
-                                <LogoBarber {...register('title')} control={control} name="title" key={index._id} id={index._id} height="100px" width="100px" image={index.image} >{index.title}</LogoBarber>
-                            )
-                        }
+                {
+                    data?.map(index => 
+                        <LogoBarber
+                            onClick={() => handleClick(index._id)}
+                            title={index.title} // Passando o title como propriedade
+                            barberId={index._id}
+                            control={control}
+                            {...register('title')}
+                            name="title"
+                            key={index._id}
+                            id={index._id}
+                            height="100px"
+                            width="100px"
+                            image={index.image}
+                        >
+                            {index.title}
+                        </LogoBarber>
+                    )
+                }
                 </FourthDiv>
             <FifithDiv>
 

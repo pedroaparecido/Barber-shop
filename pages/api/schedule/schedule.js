@@ -11,11 +11,10 @@ handler
     .post(async (req, res) => {
         try {
             // Obtém o ID do barber enviado no corpo da requisição
-            const barberId = req.body._id;
+            
 
             // Aqui você deve buscar o barber usando o ID recebido
-            const barberData = await getOneBarber({ _id: barberId });
-
+            const barberData = await getOneBarber(req.body.barber._id);
             // Verifica se o barberData não está vazio
             if (!barberData) {
                 return res.status(404).send('Barber não encontrado');

@@ -41,16 +41,23 @@ const Check = styled.input`
     }
 `
 
-const LogoBarber = forwardRef(({ name, control, defaultValue = '', image, border, width, height, children, lang, props }, ref) => {
+const LogoBarber = forwardRef(({ title, control, defaultValue = '', image, border, width, height, children, lang, onClick, onChange, ...props }, ref) => {
     const {
-        field: { value, onChange },
         fieldState: { error }
-    } = useController({ name, control, defaultValue })
-    return(
+    } = useController({ name: title, control, defaultValue }) // Usando o title como nome do campo
+
+    return (
         <FirstDiv lang={lang}>
-            <Check ref={ref} value={value} onChange={onChange} {...props} type="checkbox"/>
-            <Image image={image} border={border} height={height} width={width} />
-            <Label>{children}</Label>
+            <Check
+                onChange={onChange}
+                onClick={onClick}
+                ref={ref}
+                {...props}
+                type="checkbox"
+                id={title} // Usando o title como id do input
+            />
+            <Image image={image} border={border} height={height} width={width} htmlFor={title} />
+            <Label htmlFor={title}>{children}</Label>
         </FirstDiv>
     )
 })

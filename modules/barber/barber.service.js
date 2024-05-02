@@ -12,6 +12,6 @@ export const getBarber = async () => {
     return await Barber.find()
 }
 
-export const getOneBarber = async () => {
-    return await Barber.findOne()
+export const getOneBarber = async (barberId) => {
+    return await Barber.findById(barberId)
 }

@@ -48,6 +48,19 @@ app.get('/api/schedule/:scheduleId', async (req, res) => {
   }
 })
 
+app.get('/api/barber/:idBarber', async (req, res) => {
+  try {
+      const findABarber = await await Barber.findById(req.params.idBarber)
+      
+      if (!findABarber) {
+        return res.status(404).json({ message: 'Barbeiro não encontrado' });
+      }
+
+      res.status(200).send(findABarber)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+})
 
 app.post('/upload-image', uploadUser.single('image'), imageController.create, async (req, res) => {
     if (req.file) {

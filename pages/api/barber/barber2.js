@@ -8,7 +8,7 @@ const handler = createHandler()
 handler
     .get(async (req, res) => {
         try {
-            const findABarber = await getOneBarber(req.body)
+            const findABarber = await getOneBarber(req.query.id)
             
             res.status(200).send(findABarber)
         } catch (err) {

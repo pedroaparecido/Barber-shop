@@ -48,7 +48,7 @@ const UL = styled.ul`
 `
 
 const LI = styled.li`
-    word-spacing: 160vh;
+    word-spacing: 75vh;
     padding: 15px;
     margin-bottom: 5px;
 
@@ -77,13 +77,20 @@ function Administrative({ user }) {
     const { data } = useSWR('/api/schedule/schedule' ,fetcher, mutate('/api/schedule/schedule'))
 
     useEffect(() => {
-        const getTitle = async () => {
-            const result = await axios.get(`/api/barber/barber2`)
-            setTitle(result.data)
+        const fetchData = async () => {
+            if (data && Array.isArray(data)) { // Verifica se data é definido e é um array
+                const promises = data.map(async (item) => {
+                    const result = await axios.get(`/api/barber/barber2`, { params: { id: item.barber } });
+                    return result.data;
+                })
+                console.log(promises)
+                const responseData = await Promise.all(promises)
+                setTitle(responseData)
+            }
         }
 
-        getTitle()
-    }, [])
+        fetchData()
+    }, [data])
 
     return(
         <PrincipalDiv>
@@ -98,8 +105,8 @@ function Administrative({ user }) {
                 <FourthDiv>
                     {title && (
                         <UL>
-                            {data?.map(index => 
-                                <LI key={index._id} id={index._id}>{index.date}{title.title} <ButtonList backcolor="#16181d" color="#ffb34a">Editar</ButtonList><ButtonList backcolor="#ffb34a" color="#16181d">Apagar</ButtonList></LI>
+                            {data?.map((index, i) => 
+                                <LI key={index._id} id={index._id}>{index.date} {title[i]?.title} <ButtonList backcolor="#16181d" color="#ffb34a">Editar</ButtonList><ButtonList backcolor="#ffb34a" color="#16181d">Apagar</ButtonList></LI>
                             )}
                         </UL>
                     )}
