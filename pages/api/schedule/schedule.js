@@ -1,7 +1,7 @@
 import createHandler from '../../../lib/middlewares/nextConnect'
 import validate from '../../../lib/middlewares/validation'
 
-import { createSchedule, getSchedule, updateSchedule } from '../../../modules/shcedule/schedule.service'
+import { createSchedule, deleteSchedule, getSchedule, updateSchedule } from '../../../modules/shcedule/schedule.service'
 import { getOneBarber } from '../../../modules/barber/barber.service'
 import { createScheduleSchema } from '../../../modules/shcedule/schedule.schema'
 
@@ -43,10 +43,18 @@ handler
     })
     .patch(async (req, res) => {
         try {
-            console.log(req.body)
             const update = await updateSchedule(req.body)
 
             res.status(200).send(update)
+        } catch (err) {
+            res.status(500).send(err.message)
+        }
+    })
+    .delete(async (req, res) => {
+        try {
+            const scheduleDelete = await deleteSchedule(req.body.id)
+
+            res.status(200).send(scheduleDelete)
         } catch (err) {
             res.status(500).send(err.message)
         }

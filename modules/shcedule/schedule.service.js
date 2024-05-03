@@ -27,16 +27,20 @@ export const getScheduleWithBarberInfo = async (scheduleId) => {
     }
 };
 
-export const updateSchedule = async (scheduleData) => {
-    try {
-        // Crie uma instância do modelo Schedule com os dados atualizados
-        const updatedSchedule = new Schedule(scheduleData);
+export const updateSchedule = async (body) => {
+    return Schedule.findOneAndUpdate({
+        _id: body.id,
+    },
+    {
+        date: body.date,
+    },
+    {
+        new: true
+    })
+}
 
-        // Salve a instância atualizada no banco de dados
-        const savedSchedule = await updatedSchedule.save();
-
-        return savedSchedule; // Retorne o objeto de agendamento atualizado
-    } catch (error) {
-        console.log(error);
-    }
-};
+export const deleteSchedule = async (id) => {
+    return Schedule.findOneAndDelete({
+        _id: id
+    })
+}

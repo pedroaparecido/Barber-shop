@@ -15,3 +15,10 @@ export const getBarber = async () => {
 export const getOneBarber = async (barberId) => {
     return await Barber.findById(barberId)
 }
+
+export const updateBarber = async (body) => {
+    return Barber.findByIdAndUpdate({
+        _id: body.id,
+        title: body.title
+    })
+}

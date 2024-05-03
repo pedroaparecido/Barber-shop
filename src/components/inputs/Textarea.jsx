@@ -10,7 +10,7 @@ const TextArea = styled.textarea`
     border-radius: 10px;
 `
 
-const Textarea = forwardRef(({ name, control, ...props }, ref) => {
+const Textarea = forwardRef(({ name, control, defaultValue = '', ...props }, ref) => {
     return(
         <TextArea ref={ref} control={control} {...props} name={name} />
     )

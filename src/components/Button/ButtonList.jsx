@@ -20,9 +20,9 @@ const Button = styled.button`
     }
 `
 
-function ButtonList({ children, color, backcolor }) {
+function ButtonList({ children, onClick, color, backcolor }) {
     return(
-        <Button color={color} backcolor={backcolor}>{children}</Button>
+        <Button color={color} onClick={onClick} backcolor={backcolor}>{children}</Button>
     )
 }
 

@@ -7,9 +7,12 @@ import NavbarAdm from "../src/components/layout/NavbarAdm"
 import H1Pages from "../src/components/tipography/H1Pages"
 import Paragraph from "../src/components/tipography/Paragraph"
 import ButtonList from "../src/components/Button/ButtonList"
+import EditSchedule from "../src/components/cards/EditSchedule"
+
 import axios from "axios"
 import useSWR from "swr"
 import { useEffect, useState } from "react"
+import moment from "moment/moment"
 
 const PrincipalDiv = styled.div`
     display: flex;
@@ -48,7 +51,7 @@ const UL = styled.ul`
 `
 
 const LI = styled.li`
-    word-spacing: 75vh;
+    word-spacing: 83vh;
     padding: 15px;
     margin-bottom: 5px;
 
@@ -68,10 +71,18 @@ const HR = styled.hr`
     width: 95%;
 `
 
+const Input = styled.input`
+    padding: 10px;
+    margin-top: 20px;
+    width: 300px;
+    font-size: 14px;
+`
+
 const fetcher = url => axios.get(url).then(res => res.data)
 
 function Administrative({ user }) {
     const [title, setTitle] = useState([])
+    const [update, setUpdate] = useState(null)
     const { mutate } = useSWR()
 
     const { data } = useSWR('/api/schedule/schedule' ,fetcher, mutate('/api/schedule/schedule'))
@@ -82,15 +93,71 @@ function Administrative({ user }) {
                 const promises = data.map(async (item) => {
                     const result = await axios.get(`/api/barber/barber2`, { params: { id: item.barber } });
                     return result.data;
+                    <LI key={index._id} id={index._id}>{moment(index.date).format('DD/MM/YYYY HH:mm')} {title[i]?.title} <ButtonList backcolor="#16181d" color="#ffb34a" onClick={() => handleUpdate()}>Editar</ButtonList><ButtonList backcolor="#ffb34a" color="#16181d" onClick={() => handleDelete()}>Apagar</ButtonList></LI>
                 })
-                console.log(promises)
                 const responseData = await Promise.all(promises)
                 setTitle(responseData)
             }
         }
 
+        
         fetchData()
     }, [data])
+    
+    const handleDelete = async (id) => {
+        try {
+            const response = await axios.delete('/api/schedule/schedule', {
+                data: {
+                    id
+                }
+            })
+            if (response.status === 200)
+                mutate('/api/schedule/schedule')
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    const handleUpdateBarber = async (id) => {
+        try {
+            const data = await axios.get('/api/barber/barber')
+
+            const response = await axios.patch('/api/barber/barber', {
+                id,
+                text: data.text
+            })
+            
+            if (response.status === 200) {
+                mutate('/api/barber/barber')
+            }
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    const handleEdit = (index) => {
+        setUpdate(index); // Define o índice do item em modo de edição
+    };
+
+    const handleCancelEdit = () => {
+        setUpdate(null); // Sai do modo de edição
+    }
+
+    const handleSaveEdit = () => {
+        setUpdate(null)
+        mutate('/api/schedule/schedule')
+    }
+
+    const handleInputChange = (e, index, id) => {
+        const { value } = e.target
+
+        const updatedTitle = [...title]
+
+        updatedTitle[index] = { ...updatedTitle[index], title: value }
+
+        setTitle(updatedTitle)
+        handleUpdate(id)
+    }
 
     return(
         <PrincipalDiv>
@@ -103,13 +170,29 @@ function Administrative({ user }) {
                     <HR />
                 </ThirdDiv>
                 <FourthDiv>
-                    {title && (
-                        <UL>
-                            {data?.map((index, i) => 
-                                <LI key={index._id} id={index._id}>{index.date} {title[i]?.title} <ButtonList backcolor="#16181d" color="#ffb34a">Editar</ButtonList><ButtonList backcolor="#ffb34a" color="#16181d">Apagar</ButtonList></LI>
+                {title && (
+                <UL>
+                    {data?.map((item, index) => (
+                        <LI key={item._id} id={item._id}>
+                            {update === index ? ( // Verifica se o item está em modo de edição
+                                <div>
+                                    {<EditSchedule id={item._id} onSave={handleSaveEdit} />/* Formulário de edição */}
+                                    <Input type="text" value={title[index]?.title} onChange={(e) => handleInputChange(e, index, item[index]?._id)} />
+                                    <ButtonList onClick={() => handleUpdateBarber(index)} backcolor="#16181d" color="#ffb34a">Salvar</ButtonList>
+                                    <ButtonList onClick={handleCancelEdit} backcolor="#ffb34a" color="#16181d">Cancelar</ButtonList>
+                                </div>
+                            ) : (
+                                <div>
+                                    {/* Exibição normal do item */}
+                                    {moment(item.date).format('DD/MM/YYYY HH:mm')} {title[index]?.title}
+                                    <ButtonList onClick={() => handleEdit(index)} backcolor="#16181d" color="#ffb34a">Editar</ButtonList>
+                                    <ButtonList onClick={() => handleDelete(item._id, index)} backcolor="#ffb34a" color="#16181d">Apagar</ButtonList>
+                                </div>
                             )}
-                        </UL>
-                    )}
+                        </LI>
+                    ))}
+                </UL>
+            )}
                 </FourthDiv>
         </PrincipalDiv>
     )
