@@ -7,7 +7,8 @@ import { createBarberSchema } from '../../../modules/barber/barber.schema'
 const handler = createHandler()
 
 handler
-    .post(validate({ body: createBarberSchema }), async (req, res) => {
+    .post(async (req, res) => {
+        console.log(req.body)
         try {
             const newBarber = await createBarber(req.body)
 

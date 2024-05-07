@@ -62,11 +62,12 @@ app.get('/api/barber/:idBarber', async (req, res) => {
     }
 })
 
-app.post('/upload-image', uploadUser.single('image'), imageController.create, async (req, res) => {
+app.post('/upload-image', uploadUser.single('image'), async (req, res) => {
     if (req.file) {
         return res.json({
             erro: false,
-            mensagem: 'upload realizado com sucesso!'
+            mensagem: 'upload realizado com sucesso!',
+            image: req.file
         });
     }
 

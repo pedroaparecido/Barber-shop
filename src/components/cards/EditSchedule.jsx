@@ -5,10 +5,11 @@ import Textarea from "../inputs/Textarea"
 import ButtonList from "../Button/ButtonList"
 
 import axios from "axios"
-import { mutate } from "swr"
+import useSWR, { mutate } from "swr"
 
 const EditSchedule = ({ id, onSave }) => {
     const { register, handleSubmit } = useForm()
+    const { mutate } = useSWR()
 
     const handleUpdate = async (data) => {
         try {
@@ -18,6 +19,7 @@ const EditSchedule = ({ id, onSave }) => {
             })
             
             if (response.status === 200) {
+                mutate('/api/schedule/schedule')
                 onSave()
             }
         } catch (err) {

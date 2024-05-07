@@ -8,6 +8,9 @@ import LogoImage from "../src/components/layout/LogoImage"
 import ButtonCard from '../src/components/Button/ButtonCard'
 import { useState } from "react"
 import axios from "axios"
+import useSWR from 'swr'
+import { useForm } from "react-hook-form"
+import InputBarber from "../src/components/inputs/InputBarber"
 
 const PrincipalDiv = styled.div`
     display: flex;
@@ -57,11 +60,12 @@ const LabelFileInput = styled.label`
 `
 
 function RegisterBarber({ user }) {
+    const { register, handleSubmit, reset } = useForm()
     const [image, setImage] = useState('')
     const [message, setMessage] = useState()
+    const { mutate } = useSWR()
 
-    const uploadImage = async (e) => {
-        e.preventDefault()
+    const uploadImage = async (data) => {
         const formData = new FormData()
         formData.append('image', image)
 
@@ -71,16 +75,23 @@ function RegisterBarber({ user }) {
             }
         }
 
-        await axios.post('http://localhost:8080/upload-image', formData, headers).then((response) => {
-            setMessage(response.data.message)
+        const createImage = await axios.post('http://localhost:8080/upload-image', formData, headers)
+        
+        const response = await axios.post('/api/barber/barber', {
+            title: data.title,
+            image: createImage.data.image.filename
         })
+        
+        if (response.status === 201) {
+            reset()
+        }
     }
 
     return(
         <>
             <Navbar name={user.user} />
             <PrincipalDiv>
-                <form onSubmit={uploadImage}>
+                <form onSubmit={handleSubmit(uploadImage)}>
                     <SecondDiv>
                         { message ? <p>{message}</p> : ""}
                         <LogoImage image="/layout-principal.jpg" width="300px" height="300px" />
@@ -91,7 +102,7 @@ function RegisterBarber({ user }) {
                             </FourthDiv>
                         </ThirdDiv>
                     </SecondDiv>
-                    <Input placeholder="NOME DO BARBEIRO" />
+                    <InputBarber placeholder="NOME DO BARBEIRO" {...register('title')} name="title" />
                     <ButtonCard type="submit" color="#ffb34a">CADASTRAR</ButtonCard>
                 </form>
             </PrincipalDiv>

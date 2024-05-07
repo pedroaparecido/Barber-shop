@@ -118,17 +118,19 @@ function Administrative({ user }) {
         }
     }
 
-    const handleUpdateBarber = async (id) => {
+    const handleUpdateBarber = async (item, index) => {
         try {
-            const data = await axios.get('/api/barber/barber')
-
+            const updatedTitle = title
+            const idBarber = item.barber
+            
             const response = await axios.patch('/api/barber/barber', {
-                id,
-                text: data.text
+                _id: idBarber,
+                title: updatedTitle[index].title
             })
             
             if (response.status === 200) {
                 mutate('/api/barber/barber')
+                setUpdate(null)
             }
         } catch (err) {
             console.error(err)
@@ -156,7 +158,6 @@ function Administrative({ user }) {
         updatedTitle[index] = { ...updatedTitle[index], title: value }
 
         setTitle(updatedTitle)
-        handleUpdate(id)
     }
 
     return(
@@ -178,7 +179,7 @@ function Administrative({ user }) {
                                 <div>
                                     {<EditSchedule id={item._id} onSave={handleSaveEdit} />/* Formulário de edição */}
                                     <Input type="text" value={title[index]?.title} onChange={(e) => handleInputChange(e, index, item[index]?._id)} />
-                                    <ButtonList onClick={() => handleUpdateBarber(index)} backcolor="#16181d" color="#ffb34a">Salvar</ButtonList>
+                                    <ButtonList onClick={() => handleUpdateBarber(item, index)} backcolor="#16181d" color="#ffb34a">Salvar</ButtonList>
                                     <ButtonList onClick={handleCancelEdit} backcolor="#ffb34a" color="#16181d">Cancelar</ButtonList>
                                 </div>
                             ) : (

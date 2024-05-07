@@ -17,8 +17,11 @@ export const getOneBarber = async (barberId) => {
 }
 
 export const updateBarber = async (body) => {
-    return Barber.findByIdAndUpdate({
-        _id: body.id,
+    return Barber.findOneAndUpdate({
+        _id: body._id
+    }, {
         title: body.title
+    }, {
+        new: true
     })
 }

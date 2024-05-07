@@ -42,10 +42,6 @@ const Check = styled.input`
 `
 
 const LogoBarber = forwardRef(({ title, control, defaultValue = '', image, border, width, height, children, lang, onClick, onChange, ...props }, ref) => {
-    const {
-        fieldState: { error }
-    } = useController({ name: title, control, defaultValue }) // Usando o title como nome do campo
-
     return (
         <FirstDiv lang={lang}>
             <Check

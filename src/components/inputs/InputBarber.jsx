@@ -1,3 +1,4 @@
+import { forwardRef } from "react"
 import styled from "styled-components"
 
 const Input = styled.input`
@@ -7,10 +8,10 @@ const Input = styled.input`
     font-size: 14px;
 `
 
-const InputBarber = ({ text }) => {
+const InputBarber = forwardRef(({ text, name, ...props }, ref) => {
     return(
-        <Input text={text} />
+        <Input text={text} ref={ref} name={name} {...props} />
     )
-}
+})
 
 export default InputBarber
