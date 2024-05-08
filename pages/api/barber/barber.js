@@ -8,7 +8,6 @@ const handler = createHandler()
 
 handler
     .post(async (req, res) => {
-        console.log(req.body)
         try {
             const newBarber = await createBarber(req.body)
 

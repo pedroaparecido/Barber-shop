@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+import { withIronSessionSsr } from "iron-session/next"
+import { ironConfig } from "../lib/middlewares/iron-session"
+
 import axios from "axios"
 import { joiResolver } from '@hookform/resolvers/joi'
 import { useRouter } from "next/router"
@@ -47,7 +50,7 @@ const UnderlineSpan = styled.span`
     text-decoration: underline;
 `
 
-function Loginadm() {
+function Loginadm({ user }) {
     const router = useRouter()
     const { control, register, handleSubmit, formState: { errors }, setError } = useForm({
         resolver: joiResolver(admLoginSchema)
@@ -67,7 +70,7 @@ function Loginadm() {
 
     return(
         <>
-        <Navbar />
+        <Navbar image={user.image} name={user.user} />
             <PrincipalDiv>
                 <form onSubmit={handleSubmit(handleForm)}>
                     <Input type="text" placeholder="USUÁRIO ADMINISTRADOR" name="adminUser" {...register('adminUser')} control={control} />
@@ -81,5 +84,27 @@ function Loginadm() {
         </>
     )
 }
+
+export const getServerSideProps = withIronSessionSsr(
+    async function getServerSideProps({ req }) {
+        const user = req.session.user
+
+        if (!user) {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: '/'
+                }
+            }
+        }
+
+        return {
+            props: {
+                user
+            }
+        }
+    },
+    ironConfig
+)
 
 export default Loginadm

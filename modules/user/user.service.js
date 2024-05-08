@@ -34,3 +34,15 @@ export const login = async (body) => {
         throw err
     }
 }
+
+export const updateImage = async (id, body) => {
+    const response = await User.findOneAndUpdate({
+            _id: id
+        }, {
+            image: body
+        }, {
+            new: true
+        }
+    )
+    return response
+}

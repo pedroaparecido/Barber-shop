@@ -40,7 +40,7 @@ function NavbarAdm({ name }) {
 
     return(
         <NavbarDiv>
-            <LogoImage image="/layout-principal.jpg" width="60px" height="60px" />
+            <LogoImage image={image} width="60px" height="60px" />
             <H1 name={name}>Olá {name}</H1>
             <PrincipalDiv>
                 <Link href="/home" style={{textDecoration: 'none'}}><H1>Início</H1></Link>

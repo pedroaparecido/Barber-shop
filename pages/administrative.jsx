@@ -162,7 +162,7 @@ function Administrative({ user }) {
 
     return(
         <PrincipalDiv>
-            <NavbarAdm name={user.user} />
+            <NavbarAdm image={user.image} name={user.user} />
             <SecondDiv>
                     <H1Pages>OLÁ {user.user}</H1Pages>
                     <Paragraph>HORÁRIOS MARCADOS:</Paragraph>

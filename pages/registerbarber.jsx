@@ -89,7 +89,7 @@ function RegisterBarber({ user }) {
 
     return(
         <>
-            <Navbar name={user.user} />
+            <Navbar image={user.image} name={user.user} />
             <PrincipalDiv>
                 <form onSubmit={handleSubmit(uploadImage)}>
                     <SecondDiv>

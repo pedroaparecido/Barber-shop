@@ -110,7 +110,7 @@ function Schedule({ user }) {
 
     return(
         <PrincipalDiv>
-            <Navbar name={user.user} />
+            <Navbar image={user.image} name={user.user} />
                 <form onSubmit={handleSubmit(handleDate)}>
             <SecondDiv>
                     <H1Pages>AGENDE AGORA!</H1Pages>
