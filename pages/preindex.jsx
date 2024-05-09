@@ -1,5 +1,7 @@
 import styled from "styled-components"
-import { useEffect, useState } from "react"
+
+import { useRouter } from "next/router"
+import { useState } from "react"
 import axios from "axios"
 import { withIronSessionSsr } from 'iron-session/next'
 import { ironConfig } from "../lib/middlewares/iron-session"
@@ -8,7 +10,6 @@ import Navbar from "../src/components/layout/Navbar"
 import LogoImage from "../src/components/layout/LogoImage"
 import ButtonCard from "../src/components/Button/ButtonCard"
 import { useForm } from "react-hook-form"
-import { mutate } from "swr"
 
 const PrincipalDiv = styled.div`
     display: flex;
@@ -52,10 +53,9 @@ const LabelFileInput = styled.label`
 `
 
 function Preindex({ user }) {
+    const router = useRouter()
     const { register, handleSubmit, reset } = useForm()
     const [image, setImage] = useState('')
-    
-    useEffect(() => {}, [user])
 
     const uploadImage = async () => {
         const formData = new FormData()
@@ -75,6 +75,10 @@ function Preindex({ user }) {
                 user,
                 image: newImage
             })
+            if (updateImage.status === 200) {
+                reset()
+                router.push('/preindex')
+            }
         } catch (err) {
             console.error(err)
         }
@@ -82,12 +86,12 @@ function Preindex({ user }) {
 
     return(
         <>
-            <Navbar image={user.image} name={user.user} />
+            <Navbar image={user.image ? user.image : 'user.png'} name={user.user} />
             <form onSubmit={handleSubmit(uploadImage)}>
                 <ButtonCard type="submit" color="#ffb34a">CADASTRAR</ButtonCard>
                 <PrincipalDiv>
                     <SecondDiv>
-                        <LogoImage image="/layout-principal.jpg" width="300px" height="300px" />
+                        <LogoImage image={user.image ? user.image : 'user.png'} width="300px" height="300px" />
                         <ThirdDiv>
                             <FourthDiv>
                                 <LabelFileInput for="selecao-de-arquivo">+</LabelFileInput>

@@ -70,7 +70,7 @@ function Loginadm({ user }) {
 
     return(
         <>
-        <Navbar image={user.image} name={user.user} />
+        <Navbar image={user.image ? user.image : 'user.png'} name={user.user} />
             <PrincipalDiv>
                 <form onSubmit={handleSubmit(handleForm)}>
                     <Input type="text" placeholder="USUÁRIO ADMINISTRADOR" name="adminUser" {...register('adminUser')} control={control} />

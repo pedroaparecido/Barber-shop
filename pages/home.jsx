@@ -17,7 +17,7 @@ const PrincipalDiv = styled.div`
 function Home({ user }) {
     return(
         <>
-            <Navbar image={user.image} name={user.user} />
+            <Navbar image={user.image ? user.image : 'user.png'} name={user.user} />
             <PrincipalDiv>
                 <CardBarber color="#ffb34a"><LogoImage height="100px" width="100px" /></CardBarber>
                 <CardBarber color="#ebc185"><LogoImage height="100px" width="100px" /></CardBarber>

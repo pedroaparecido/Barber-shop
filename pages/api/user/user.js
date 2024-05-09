@@ -19,7 +19,7 @@ handler
             }
             const image = await updateImage(req.body.user.id, req.body.image)
             await req.session.save()
-            res.status(200).send(session)
+            res.status(200).send(image)
         } catch (err) {
             res.status(400).send(err.message)
         }

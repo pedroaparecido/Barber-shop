@@ -30,7 +30,7 @@ const StyledLogout = styled.a`
     cursor: pointer;
 `
 
-function NavbarAdm({ name }) {
+function NavbarAdm({ name, image }) {
     const router = useRouter()
 
     const handleLogout = async () => {

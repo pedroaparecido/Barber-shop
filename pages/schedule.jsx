@@ -41,10 +41,8 @@ const ThirdDiv = styled.div`
 
 const FourthDiv = styled.div`
     padding-top: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 `
 
 const FifithDiv = styled.div`
@@ -110,7 +108,7 @@ function Schedule({ user }) {
 
     return(
         <PrincipalDiv>
-            <Navbar image={user.image} name={user.user} />
+            <Navbar image={user.image ? user.image : 'user.png'} name={user.user} />
                 <form onSubmit={handleSubmit(handleDate)}>
             <SecondDiv>
                     <H1Pages>AGENDE AGORA!</H1Pages>
@@ -144,7 +142,7 @@ function Schedule({ user }) {
                             id={index._id}
                             height="100px"
                             width="100px"
-                            image={index.image}
+                            image={index.image ? index.image : 'user2.png'}
                         >
                             {index.title}
                         </LogoBarber>

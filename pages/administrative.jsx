@@ -159,10 +159,10 @@ function Administrative({ user }) {
 
         setTitle(updatedTitle)
     }
-
+    
     return(
         <PrincipalDiv>
-            <NavbarAdm image={user.image} name={user.user} />
+            <NavbarAdm image={user.image ? user.image : 'user.png' } name={user.user} />
             <SecondDiv>
                     <H1Pages>OLÁ {user.user}</H1Pages>
                     <Paragraph>HORÁRIOS MARCADOS:</Paragraph>

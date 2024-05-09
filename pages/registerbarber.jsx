@@ -89,12 +89,12 @@ function RegisterBarber({ user }) {
 
     return(
         <>
-            <Navbar image={user.image} name={user.user} />
+            <Navbar image={user.image ? user.image : 'user.png'} name={user.user} />
             <PrincipalDiv>
                 <form onSubmit={handleSubmit(uploadImage)}>
                     <SecondDiv>
                         { message ? <p>{message}</p> : ""}
-                        <LogoImage image="/layout-principal.jpg" width="300px" height="300px" />
+                        <LogoImage image={'user.png'} width="300px" height="300px" />
                         <ThirdDiv>
                             <FourthDiv>
                                 <LabelFileInput for="selecao-de-arquivo">+</LabelFileInput>
