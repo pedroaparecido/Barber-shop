@@ -4,7 +4,18 @@ import { forwardRef } from "react"
 
 const PrincipalDiv = styled.div`
     padding-top: 10px;
-`
+
+    @media (max-width: 425px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    @media (max-width: 375px) {
+        display: flex;
+        justify-content: center;
+    }
+    `
 
 const PrincipalInput = styled.input`
     padding: 20px;
@@ -17,6 +28,14 @@ const PrincipalInput = styled.input`
 
     &:focus {
         outline: none;
+    }
+
+    @media (max-width: 426px) {
+        width: 300px;
+    }
+
+    @media (max-width: 375px) {
+        width: 200px;
     }
 `
 

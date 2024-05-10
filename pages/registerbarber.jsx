@@ -27,6 +27,20 @@ const SecondDiv = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: 426px) {
+        width: 400px;
+    }
+
+    @media (max-width: 376px) {
+        width: 350px;
+        height: 400px;
+    }
+
+    @media (max-width: 321px) {
+        width: 300px;
+        height: 400px;
+    }
 `
 
 const ThirdDiv = styled.div`

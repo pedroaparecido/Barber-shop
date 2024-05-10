@@ -23,6 +23,15 @@ const PrincipalDiv = styled.div`
     background-size: cover;
     width: 100%;
     height: 70vh;
+
+    @media (max-width: 426px) {
+        padding-top: 80px;
+    }
+
+    @media (max-width: 376px) {
+        padding-top: 40px;
+        height: 80vh;
+    }
 `
 
 const StyledP = styled.p`
@@ -88,7 +97,7 @@ function HomePage() {
                     <Input type="password" placeholder="SENHA" name="password" control={control} />
                     <Button type="submit">LOGIN</Button>
                 </form>
-                <Link href="/register"><TransparentButton>REGISTER</TransparentButton></Link>
+                <Link href="/register"><TransparentButton>REGISTRO</TransparentButton></Link>
                 
             </PrincipalDiv>
             <FooterDiv>

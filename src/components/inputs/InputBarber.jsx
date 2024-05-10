@@ -6,6 +6,10 @@ const Input = styled.input`
     margin-top: 20px;
     width: 300px;
     font-size: 14px;
+
+    @media (max-width: 320px) {
+        width: 200px;
+    }
 `
 
 const InputBarber = forwardRef(({ text, name, ...props }, ref) => {

@@ -21,6 +21,11 @@ const PrincipalDiv = styled.div`
     background-size: cover;
     width: 100%;
     height: 84vh;
+
+    @media (max-width: 864px) {
+        padding-top: 40px;
+        height: 88vh;
+    }
 `
 
 const StyledP = styled.span`

@@ -8,6 +8,14 @@ const TextArea = styled.textarea`
     margin-top: 50px;
     margin-bottom: 100px;
     border-radius: 10px;
+
+    @media (max-width: 445px) {
+        width: 300px;
+    }
+
+    @media (max-width: 321px) {
+        width: 250px;
+    }
 `
 
 const Textarea = forwardRef(({ name, control, defaultValue = '', ...props }, ref) => {

@@ -23,6 +23,11 @@ const Image = styled.label`
     &:hover {
         border: 10px solid #ffb34a;
     }
+
+    @media (max-width: 376px) {
+        height: 75px;
+        width: 75px;
+    }
 `
 
 const Label = styled.label`

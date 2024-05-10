@@ -12,6 +12,16 @@ const PrincipalDiv = styled.div`
     grid-template-columns: repeat(3, 250px);
     gap: 20px;
     justify-content: center;
+
+    @media (max-width: 769px) {
+        display: grid;
+        grid-template-columns: repeat(3, 200px);
+    }
+
+    @media (max-width: 426px) {
+        display: grid;
+        grid-template-columns: repeat(1, 200px);
+    }
 `
 
 function Home({ user }) {

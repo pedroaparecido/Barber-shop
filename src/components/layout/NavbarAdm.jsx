@@ -3,7 +3,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 
 import H1 from '../tipography/TipoNavbar'
-import LogoImage from "./LogoImage"
+import LogoImageNavbar from "./LogoImageNavbar"
 import Link from "next/link"
 
 const NavbarDiv = styled.div`
@@ -15,6 +15,10 @@ const NavbarDiv = styled.div`
     align-items: center;
     gap: 20px;
     margin-bottom: 30px;
+
+    @media (max-width: 426px) {
+        padding: 15px;
+    }
 `
 
 const PrincipalDiv = styled.div`
@@ -24,6 +28,10 @@ const PrincipalDiv = styled.div`
     justify-content: end;
     align-items: center;
     gap: 20px;
+
+    @media (max-width: 426px) {
+        gap: 0;
+    }
 `
 
 const StyledLogout = styled.a`
@@ -40,7 +48,7 @@ function NavbarAdm({ name, image }) {
 
     return(
         <NavbarDiv>
-            <LogoImage image={image} width="60px" height="60px" />
+            <LogoImageNavbar image={image} width="60px" height="60px" />
             <H1 name={name}>Olá {name}</H1>
             <PrincipalDiv>
                 <Link href="/home" style={{textDecoration: 'none'}}><H1>Início</H1></Link>

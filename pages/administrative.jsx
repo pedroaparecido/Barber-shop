@@ -26,6 +26,11 @@ const SecondDiv = styled.div`
     align-items: start;
     padding-left: 300px;
     
+    @media (max-width: 426px) {
+        display: flex;
+        align-items: center;
+        padding-left: 0;
+    }
 `
 
 const ThirdDiv = styled.div`
@@ -63,6 +68,22 @@ const LI = styled.li`
 	background-color:#16181d;
     color: #ffb34a;
 	}
+
+    @media (max-width: 864px) {
+        word-spacing: 41vh;
+    }
+
+    @media (max-width: 769px) {
+        word-spacing: 33vh;
+    }
+
+    @media (max-width: 426px) {
+        word-spacing: 5vh;
+    }
+
+    @media (max-width: 376px) {
+        word-spacing: normal;
+    }
 `
 
 const HR = styled.hr`

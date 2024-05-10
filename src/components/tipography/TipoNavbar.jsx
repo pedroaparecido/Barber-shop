@@ -12,6 +12,11 @@ const H1 = styled.h1`
         background-color: #16181d;
         color: #ffb34a;
     }
+
+    @media (max-width: 426px) {
+        font-size: 8px;
+        padding: 2px;
+    }
 `
 
 function TipoNavbar({ children }) {

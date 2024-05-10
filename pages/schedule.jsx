@@ -31,6 +31,15 @@ const SecondDiv = styled.div`
     align-items: start;
     padding-left: 300px;
     
+    @media (max-width: 769px) {
+        padding-left: 100px;
+    }
+
+    @media (max-width: 426px) {
+        padding-left: 0;
+        display: flex;
+        align-items: center;
+    }
 `
 
 const ThirdDiv = styled.div`

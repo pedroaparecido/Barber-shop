@@ -23,6 +23,22 @@ const PrincipalButton = styled.button`
         color: #16171d;
         border-color: transparent;
     }
+
+    @media (max-width: 444px) {
+        width: 420px;
+    }
+
+    @media (max-width: 426px) {
+        width: 340px;
+    }
+
+    @media (max-width: 380px) {
+        width: 240px;
+    }
+
+    @media (max-width: 340px) {
+        width: 240px
+    }
 `
 
 function TransparentButton({ children }) {
