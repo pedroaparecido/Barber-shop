@@ -82,6 +82,7 @@ function HomePage() {
     return(
         <>
             <PrincipalDiv>
+                <h1>Clique em Registrar para alterar o estilo da página</h1>
                 <form onSubmit={handleSubmit(handleForm)}>
                     <Input type="text" placeholder="NOME OU USUÁRIO" name="userOrEmail" control={control} />
                     <Input type="password" placeholder="SENHA" name="password" control={control} />
