@@ -42,7 +42,7 @@ function Navbar({ name, image }) {
     const router = useRouter()
 
     const handleLogout = async () => {
-        await axios.post('/api/user/logout')
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/user/logout`)
         router.push('/')
     }
 

@@ -4,11 +4,11 @@ import useSWR from "swr"
 
 import InputBarber from '../inputs/InputBarber'
 
-const fetcher = url => axios.get('/api/schedule/schedule', data)
+const fetcher = url => axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/schedule`, data)
 
 const EditBarber = () => {
 
-    const { data } = useSWR('/api/schedule/schedule')
+    const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/schedule`)
 
     const getBarber = async () => {
         const response = data.barber

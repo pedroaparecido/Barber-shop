@@ -85,7 +85,7 @@ function Preindex({ user }) {
             const createImage = await axios.post('http://localhost:8080/upload-image', formData, headers)
             
             const newImage = createImage.data.image.filename
-            const updateImage = await axios.patch('/api/user/user', {
+            const updateImage = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/user`, {
                 user,
                 image: newImage
             })
