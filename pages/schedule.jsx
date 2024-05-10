@@ -90,7 +90,7 @@ function Schedule({ user }) {
     const handleDate = async (data) => {
         try {
             // Realiza uma requisição para obter os dados do barbeiro
-            const getBarber = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}http://localhost:8080/api/barber/${checked}`);
+            const getBarber = await axios.get(`http://localhost:8080/api/barber/${checked}`);
             const barber = getBarber.data; // Supondo que o ID do barber esteja em getBarber.data._id
 
             // Cria um objeto contendo os dados do agendamento, incluindo o ID do barber
@@ -102,9 +102,9 @@ function Schedule({ user }) {
             
 
             // Realiza uma requisição para criar o agendamento, incluindo os dados do agendamento
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/schedule`, scheduleData);
+            const response = await axios.post('/api/schedule/schedule', scheduleData);
             if (response.status === 201) {
-                const schedule = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}http://localhost:8080/api/schedule/${response.data._id}`);
+                const schedule = await axios.get(`http://localhost:8080/api/schedule/${response.data._id}`);
                 if (schedule.status === 200)
                     reset();
             }
@@ -113,7 +113,7 @@ function Schedule({ user }) {
         }
     }
 
-    const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/barber/barber`, fetcher)
+    const { data } = useSWR('/api/barber/barber', fetcher)
 
     return(
         <PrincipalDiv>

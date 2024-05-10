@@ -58,7 +58,7 @@ function Loginadm({ user }) {
 
     const handleForm = async (data) => {
         try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/administrative/login`, data)
+            const response = await axios.post('/api/administrative/login', data)
 
             if (response.status === 200) {
                 router.push('/administrative')

@@ -89,9 +89,9 @@ function RegisterBarber({ user }) {
             }
         }
 
-        const createImage = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}http://localhost:8080/upload-image`, formData, headers)
+        const createImage = await axios.post('http://localhost:8080/upload-image', formData, headers)
         
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/barber/barber`, {
+        const response = await axios.post('/api/barber/barber', {
             title: data.title,
             image: createImage.data.image.filename
         })

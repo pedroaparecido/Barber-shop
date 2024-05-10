@@ -64,7 +64,7 @@ function Register() {
 
     const handleForm = async (data) => {
         try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/user/signup`, data)
+            const response = await axios.post('/api/user/signup', data)
 
             if (response.status === 201) {
                 router.push('/preindex')

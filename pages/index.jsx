@@ -70,7 +70,7 @@ function HomePage() {
 
     const handleForm = async (data) => {
         try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/user/login`, data)
+            const response = await axios.post('/api/user/login', data)
 
             if (response.status === 200) {
                 router.push('/home')

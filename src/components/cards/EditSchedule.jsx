@@ -13,13 +13,13 @@ const EditSchedule = ({ id, onSave }) => {
 
     const handleUpdate = async (data) => {
         try {
-            const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/schedule`, {
+            const response = await axios.patch('/api/schedule/schedule', {
                 id,
                 date: data.date,
             })
             
             if (response.status === 200) {
-                mutate(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/schedule`)
+                mutate('/api/schedule/schedule')
                 onSave()
             }
         } catch (err) {

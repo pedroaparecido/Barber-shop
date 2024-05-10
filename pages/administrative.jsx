@@ -106,13 +106,13 @@ function Administrative({ user }) {
     const [update, setUpdate] = useState(null)
     const { mutate } = useSWR()
 
-    const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/schedule` ,fetcher, mutate(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/schedule`))
+    const { data } = useSWR('/api/schedule/schedule' ,fetcher, mutate('/api/schedule/schedule'))
 
     useEffect(() => {
         const fetchData = async () => {
             if (data && Array.isArray(data)) { // Verifica se data é definido e é um array
                 const promises = data.map(async (item) => {
-                    const result = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/barber/barber2`, { params: { id: item.barber } });
+                    const result = await axios.get(`/api/barber/barber2`, { params: { id: item.barber } });
                     return result.data;
                     <LI key={index._id} id={index._id}>{moment(index.date).format('DD/MM/YYYY HH:mm')} {title[i]?.title} <ButtonList backcolor="#16181d" color="#ffb34a" onClick={() => handleUpdate()}>Editar</ButtonList><ButtonList backcolor="#ffb34a" color="#16181d" onClick={() => handleDelete()}>Apagar</ButtonList></LI>
                 })
@@ -127,13 +127,13 @@ function Administrative({ user }) {
     
     const handleDelete = async (id) => {
         try {
-            const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/schedule`, {
+            const response = await axios.delete('/api/schedule/schedule', {
                 data: {
                     id
                 }
             })
             if (response.status === 200)
-                mutate(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/schedule`)
+                mutate('/api/schedule/schedule')
         } catch (err) {
             console.error(err)
         }
@@ -144,13 +144,13 @@ function Administrative({ user }) {
             const updatedTitle = title
             const idBarber = item.barber
             
-            const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/barber/barber`, {
+            const response = await axios.patch('/api/barber/barber', {
                 _id: idBarber,
                 title: updatedTitle[index].title
             })
             
             if (response.status === 200) {
-                mutate(`${process.env.NEXT_PUBLIC_API_URL}/api/barber/barber`)
+                mutate('/api/barber/barber')
                 setUpdate(null)
             }
         } catch (err) {
@@ -168,7 +168,7 @@ function Administrative({ user }) {
 
     const handleSaveEdit = () => {
         setUpdate(null)
-        mutate(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/schedule`)
+        mutate('/api/schedule/schedule')
     }
 
     const handleInputChange = (e, index, id) => {
