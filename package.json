@@ -5,9 +5,10 @@
   "main": "pages/api/barber/app.js",
   "proxy": "http://localhost:8080/",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon app.js",
-    "client": "next dev"
+    "build": "next build",
+    "start": "nodemon app.js",
+    "client": "next dev",
+    "dev": "concurrently \"npm run start\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
