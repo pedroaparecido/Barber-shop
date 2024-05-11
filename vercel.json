@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "app.js", "use": "@vercel/node" },
+      { "src": "next.config.js", "use": "@vercel/next" }
+    ],
+    "routes": [
+      { "src": "/(.*)", "dest": "app.js" }
+    ],
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "dev": {
+      "start": "npm run start"
+    }
+  }
+  
