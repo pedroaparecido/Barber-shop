@@ -9,9 +9,6 @@
     ],
     "env": {
       "NODE_ENV": "production"
-    },
-    "dev": {
-      "start": "npm run start"
     }
   }
   
